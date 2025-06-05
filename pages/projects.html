@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Jai Thakur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .projects-section {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 2rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            position: relative;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            background-color: rgba(0, 255, 157, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">JT</a>
+            <ul class="nav__links">
+                <li><a href="../index.html" class="nav__link">Home</a></li>
+                <li><a href="about.html" class="nav__link">About</a></li>
+                <li><a href="#" class="nav__link">Projects</a></li>
+                <li><a href="contact.html" class="nav__link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="projects-section">
+        <h1>Projects</h1>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <div class="project-image" style="background-image: url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><path fill=\'%2300ff9d\' d=\'M12 5c-1.11 0-2 .89-2 2s.89 2 2 2 2-.89 2-2-.89-2-2-2zm6 14h-1c0-3.87-3.13-7-7-7s-7 3.13-7 7H2c0-4.97 4.03-9 9-9s9 4.03 9 9z\'/></svg>');"></div>
+                <div class="project-content">
+                    <h3 class="project-title">Fitness Tracker App</h3>
+                    <p class="project-description">
+                        A cross-platform fitness application designed to assist users in tracking workouts, progress, and fitness goals. Features an intuitive interface with locally functional modules for exercise logging and routine planning.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/JaiThakur0005/SparkFit_FitnessApp" class="project-link" target="_blank">View Project →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-image" style="background-image: url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><path fill=\'%2300ff9d\' d=\'M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z\'/></svg>');"></div>
+                <div class="project-content">
+                    <h3 class="project-title">Book Store Management System</h3>
+                    <p class="project-description">
+                        A Python-based application built to streamline the management of library book records. Utilizing data structures and algorithms (DSA), it enables secure login, book addition, deletion, and search by ID.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">DSA</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-image" style="background-image: url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><path fill=\'%2300ff9d\' d=\'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-2.95 8.95-7 10.18-4.05-1.23-7-5.51-7-10.18V6.3l7-3.12z\'/></svg>');"></div>
+                <div class="project-content">
+                    <h3 class="project-title">Task Management System</h3>
+                    <p class="project-description">
+                        A database-driven application designed to organize, monitor, and streamline task-related operations. Features task delegation, progress tracking, and comprehensive reporting capabilities.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">MySQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="easter-egg">🔒</div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Jai Thakur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .contact-section {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .contact-info {
+            padding: 2rem;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-label {
+            font-family: var(--font-code);
+            color: var(--primary-color);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .contact-value {
+            color: var(--text-secondary);
+        }
+
+        .contact-value a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-value a:hover {
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-code);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            transition: var(--transition);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">JT</a>
+            <ul class="nav__links">
+                <li><a href="../index.html" class="nav__link">Home</a></li>
+                <li><a href="about.html" class="nav__link">About</a></li>
+                <li><a href="projects.html" class="nav__link">Projects</a></li>
+                <li><a href="#" class="nav__link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="contact-section">
+        <div class="contact-form fade-in">
+            <h1>Get in Touch</h1>
+            <p style="color: var(--text-secondary); margin: 1rem 0 2rem;">
+                Have a question or want to work together? Feel free to reach out!
+            </p>
+            <form id="contact-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" class="form-textarea" placeholder="Your message"></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info fade-in">
+            <h2>Contact Information</h2>
+            <div class="contact-item">
+                <span class="contact-label">Email</span>
+                <div class="contact-value">
+                    <a href="mailto:jaithakur0005@gmail.com">jaithakur0005@gmail.com</a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Phone</span>
+                <div class="contact-value">
+                    <a href="tel:9728944994">+91 9728944994</a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Location</span>
+                <div class="contact-value">Dehradun, India</div>
+            </div>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/jai-thakur-788ab728b" target="_blank" class="social-link">LinkedIn →</a>
+                <a href="https://github.com/JaiThakur0005" target="_blank" class="social-link">GitHub →</a>
+            </div>
+        </div>
+    </main>
+
+    <div class="easter-egg">🔒</div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Jai Thakur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        .about-section {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 2rem;
+        }
+
+        .education-item, .skills-item {
+            background-color: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .education-item:hover, .skills-item:hover {
+            transform: translateX(10px);
+        }
+
+        .education-date {
+            color: var(--primary-color);
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+        }
+
+        .education-school {
+            font-size: 1.25rem;
+            margin: 0.5rem 0;
+        }
+
+        .education-degree {
+            color: var(--text-secondary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-family: var(--font-code);
+        }
+
+        .skill-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-list li::before {
+            content: '▹';
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav__container">
+            <a href="../index.html" class="nav__logo">JT</a>
+            <ul class="nav__links">
+                <li><a href="../index.html" class="nav__link">Home</a></li>
+                <li><a href="#" class="nav__link">About</a></li>
+                <li><a href="projects.html" class="nav__link">Projects</a></li>
+                <li><a href="contact.html" class="nav__link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="about-section fade-in">
+        <h1>About Me</h1>
+        <p style="margin: 2rem 0;">
+            I'm currently a B.Tech student at UPES Dehradun with a deep and focused interest in cybersecurity and digital forensics. I'm passionate about understanding how systems can be protected, how breaches occur, and how evidence can be analyzed. My engineering background allows me to approach technical challenges logically, and I'm committed to building a career focused on enhancing digital security and performing in-depth analysis of cyber threats and incidents.
+        </p>
+
+        <h2>Education</h2>
+        <div class="education-item fade-in">
+            <div class="education-date">July 2023 - June 2027</div>
+            <h3 class="education-school">UPES Dehradun, India</h3>
+            <div class="education-degree">Bachelors of Technology in CSE - Cybersecurity and forensic</div>
+        </div>
+
+        <div class="education-item fade-in">
+            <div class="education-date">March 2022 - May 2023</div>
+            <h3 class="education-school">Delhi Public School, Rewari</h3>
+            <div class="education-degree">CBSE Higher Secondary Certificate</div>
+            <div class="education-degree">Percentage: 76.67/100.0</div>
+        </div>
+
+        <div class="education-item fade-in">
+            <div class="education-date">March 2020 - June 2021</div>
+            <h3 class="education-school">Ganesh Lal Hindu Public School, Rewari</h3>
+            <div class="education-degree">CBSE Secondary School Certificate</div>
+            <div class="education-degree">Percentage: 83.60/100.0</div>
+        </div>
+
+        <h2 style="margin-top: 3rem;">Skills</h2>
+        <div class="skills-grid">
+            <div class="skills-item fade-in">
+                <h3 class="skill-category">Programming & Development</h3>
+                <ul class="skill-list">
+                    <li>C</li>
+                    <li>Java</li>
+                    <li>Python</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>
+            </div>
+
+            <div class="skills-item fade-in">
+                <h3 class="skill-category">Tools & Technologies</h3>
+                <ul class="skill-list">
+                    <li>MySQL</li>
+                    <li>Microsoft Excel</li>
+                    <li>ChatGPT</li>
+                    <li>Gemini</li>
+                    <li>DALL-E</li>
+                    <li>Canva</li>
+                </ul>
+            </div>
+
+            <div class="skills-item fade-in">
+                <h3 class="skill-category">Technical Knowledge</h3>
+                <ul class="skill-list">
+                    <li>Prompt Engineering</li>
+                    <li>Cybersecurity Fundamentals</li>
+                    <li>Network Fundamentals</li>
+                </ul>
+            </div>
+
+            <div class="skills-item fade-in">
+                <h3 class="skill-category">Soft Skills</h3>
+                <ul class="skill-list">
+                    <li>Communication</li>
+                    <li>Leadership</li>
+                    <li>Teamwork</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <div class="easter-egg">🔒</div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html> 
