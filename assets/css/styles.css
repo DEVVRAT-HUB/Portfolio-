@@ -365,4 +365,24 @@ h1, h2, h3, h4, h5, h6 {
         height: 200px;
         margin: 0 auto;
     }
+}
+
+/* Back Button */
+.back-button {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-family: var(--font-code);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.back-button:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 255, 157, 0.1);
+    transform: translateX(-5px);
 } 

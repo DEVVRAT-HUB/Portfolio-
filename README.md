@@ -1,38 +1,29 @@
-# Jai Thakur's Portfolio
+# SparkFit Fitness App
 
-A modern, cybersecurity-themed portfolio website showcasing my skills, projects, and experience in the field of cybersecurity and software development.
+A cross-platform fitness application designed to assist users in tracking workouts, progress, and fitness goals. Features an intuitive interface with locally functional modules for exercise logging and routine planning.
 
 ## Features
-- Responsive design with dark mode and cyber-themed aesthetics
-- Interactive UI elements with subtle animations
-- Semantic HTML5 structure
-- Custom CSS with no frameworks
-- JavaScript form validation and animations
-- Easter eggs and creative elements
+- Workout tracking
+- Progress monitoring
+- Fitness goal setting
+- Exercise logging
+- Routine planning
+- Personalized workout plans
+- Progress visualization
+- Exercise library
 
-## Project Structure
-```
-portfolio2.0/
-├── index.html
-├── pages/
-│   ├── about.html
-│   ├── projects.html
-│   └── contact.html
-├── assets/
-│   ├── css/
-│   │   └── styles.css
-│   ├── js/
-│   │   └── script.js
-│   └── images/
-└── README.md
-```
+## Tech Stack
+- React
+- React Native
+- Node.js
+- Express
+- MongoDB
 
-## Setup Instructions
-1. Clone this repository
-2. Open index.html in your browser
-3. For development, use a local server (e.g., Live Server VS Code extension)
+## Getting Started
+Instructions for setting up and running the project will be added soon.
 
-## Technologies Used
-- HTML5
-- CSS3
-- JavaScript (Vanilla) 
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+This project is licensed under the MIT License. 
