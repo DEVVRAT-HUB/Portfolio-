@@ -3,59 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jai Thakur - Cybersecurity Portfolio</title>
+    <title>Devvrat Pundir - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN with custom configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-accent': '#00ff9d', /* Bright green from original */
+                        'bg-secondary': '#1a202c',  /* Dark gray for secondary backgrounds */
+                        'text-secondary': '#a0aec0', /* Light gray for secondary text */
+                        'text-primary': '#edf2f7',   /* Off-white for primary text */
+                        'error-red': '#ff6b6b',     /* For error messages */
+                        'timeline-accent': '#00BFFF', /* Accent color for timeline and skill bars */
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'], /* Main font */
+                        mono: ['Fira Code', 'monospace'],     /* Code/label font */
+                    },
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300ff9d' d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-2.95 8.95-7 10.18-4.05-1.23-7-5.51-7-10.18V6.3l7-3.12z'/><path fill='%2300ff9d' d='M12 2L4 6v5c0 4.78 3.32 9.23 8 10.33C16.68 20.23 20 15.78 20 11V6l-8-4zm0 18c-3.76-1.08-6-4.95-6-9V7l6-3 6 3v4c0 4.05-2.24 7.92-6 9z'/></svg>">
+    <style>
+        /* Base body styles are now mostly handled by Tailwind classes directly on <body> */
+        body {
+            @apply bg-gray-900 text-text-primary min-h-screen font-sans;
+        }
+
+        /* Fade-in animation definition */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0; /* Start invisible */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* Optional: slight slide up effect */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #00ff9d;
+            color: #1a202c;
+            padding: 8px;
+            z-index: 10000;
+            text-decoration: none;
+            transition: top 0.3s ease-in-out;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Mobile menu specific styles (matching other pages) */
+        .nav__links {
+            display: none; /* Hidden by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .nav__links {
+                display: flex; /* Flex on medium screens and up */
+            }
+        }
+        .nav__links.active {
+            display: flex;
+            flex-direction: column; /* Show as column when active */
+            position: absolute; /* Position over content */
+            top: 100%; /* Below nav bar */
+            left: 0;
+            width: 100%;
+            background-color: #1a202c; /* bg-secondary */
+            padding: 1rem 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            z-index: 50; /* Above main content */
+        }
+        .nav__links.active li {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .nav__links.active a {
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+        .hamburger {
+            display: block; /* Shown by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .hamburger {
+                display: none; /* Hidden on medium screens and up */
+            }
+        }
+
+        /* Particles.js Container Styling */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Ensure it's behind other content */
+            background-color: #1a202c; /* Fallback background color, should match body or a dark theme */
+        }
+
+        /* Loading Spinner Styles (Adjusted for Tailwind colors) */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: theme('colors.bg-secondary'); /* Use Tailwind color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading.fade-out {
+            opacity: 0;
+            pointer-events: none; /* Disable interaction after fade out */
+        }
+
+        .loading__spinner {
+            border: 8px solid rgba(0, 255, 157, 0.2); /* primary-accent with opacity */
+            border-top: 8px solid theme('colors.primary-accent'); /* primary-accent */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-900 text-text-primary min-h-screen font-sans">
+    <!-- Loading Spinner -->
     <div class="loading">
         <div class="loading__content">
             <div class="loading__spinner"></div>
         </div>
     </div>
 
-    <nav class="nav">
-        <div class="nav__container">
-            <a href="#" class="nav__logo">JT Portfolio</a>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8" role="navigation" aria-label="Main Navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <!-- Back to Home link is not needed on the Home page itself -->
+                <a href="index.html" class="text-xl md:text-2xl font-bold text-white hover:text-primary-accent transition-colors duration-300">DP Portfolio</a>
             </div>
-            <ul class="nav__links">
-                <li><a href="#" class="nav__link">Home</a></li>
-                <li><a href="pages/about.html" class="nav__link">About</a></li>
-                <li><a href="pages/projects.html" class="nav__link">Projects</a></li>
-                <li><a href="pages/contact.html" class="nav__link">Contact</a></li>
+            <div class="md:hidden">
+                <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white"></span>
+                </button>
+            </div>
+            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+                <li role="none"><a href="index.html" class="text-primary-accent font-semibold border-b-2 border-primary-accent pb-1" role="menuitem" aria-current="page">Home</a></li>
+                <li role="none"><a href="pages/about.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">About</a></li>
+                <li role="none"><a href="pages/projects.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Projects</a></li>
+                <li role="none"><a href="pages/contact.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <main>
-        <section class="hero">
-            <canvas class="matrix-bg"></canvas>
-            <div class="hero__content fade-in">
-                <div class="profile-container">
-                    <div class="profile-photo">
-                        <!-- Add your photo here -->
-                        <img src="assets/images/profile.jpg" alt="Jai Thakur" id="profile-image">
-                    </div>
-                    <div class="profile-info">
-                        <h1 class="hero__title">Jai Thakur</h1>
-                        <p class="hero__subtitle">B.Tech Student at UPES Dehradun</p>
-                        <p class="hero__subtitle">Passionate about Cybersecurity, Forensics, and Building Secure Digital Solutions</p>
-                        <a href="pages/about.html" class="btn">Learn More</a>
-                    </div>
+    <main id="main-content" class="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12 md:py-20">
+        <section class="hero__content text-center max-w-4xl mx-auto fade-in">
+            <div class="profile-container mb-8 md:mb-12">
+                <div class="profile-photo flex-shrink-0 w-64 h-64 rounded-lg overflow-hidden border-4 border-primary-accent mx-auto shadow-lg mb-6
+                            transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-accent/30">
+                    <img src="assets/images/profile.jpg" onerror="this.onerror=null;this.src='https://placehold.co/256x256/1a202c/a0aec0?text=Profile';" alt="Devvrat Pundir" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                </div>
+                <div class="profile-info">
+                    <h1 class="hero__title text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Devvrat Pundir</h1>
+                    <p class="hero__subtitle text-xl md:text-2xl text-text-secondary mb-3">B.Tech Student at UPES Dehradun</p>
+                    <p class="hero__subtitle text-lg md:text-xl text-text-secondary mb-8" id="animated-tagline">
+                        <!-- Tagline will be animated here by JavaScript -->
+                    </p>
+                    <a href="pages/about.html" class="btn bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300 inline-block shadow-md hover:shadow-xl">Learn More</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <div class="easter-egg">🔒</div>
+    <div class="easter-egg fixed bottom-4 right-4 bg-bg-secondary text-primary-accent p-3 rounded-full shadow-lg cursor-pointer text-xl z-50 transition-transform hover:scale-110">🔒</div>
 
+    <footer class="bg-gray-800 text-text-secondary py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 Devvrat Pundir. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
-</html> 
+</html>

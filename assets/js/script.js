@@ -1,93 +1,151 @@
-// Matrix Background Animation
-function createMatrixBackground() {
-    const canvas = document.querySelector('.matrix-bg');
-    if (!canvas) return;
+// Particles.js Background Animation Initialization
+function initParticlesBackground() {
+    // Check if the particles-js container exists on this page
+    if (document.getElementById('particles-js')) {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80, // Number of particles
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00ff9d" // Particle color (your primary accent color)
+                },
+                "shape": {
+                    "type": "circle", // Shape of particles (circle, edge, triangle, polygon, star, image)
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg", // Placeholder, not used for a subtle effect
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5, // Opacity of particles
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3, // Size of particles
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150, // Distance for lines to connect
+                    "color": "#a0aec0", // Line color (your text secondary color)
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6, // Speed of particle movement
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab" // "grab" for lines, "repulse" for push effect
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push" // "push" for new particles, "remove" for removing
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 180, // Grab distance
+                        "line_linked": {
+                            "opacity": 1 // Opacity of lines when grabbed
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    }
+}
 
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Typing Animation for Tagline
+function typeTagline(elementId, tagline, delay = 70, wordDelay = 300) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
 
-    const chars = '01';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+    let currentText = '';
+    let wordIndex = 0;
+    const words = tagline.split(' ');
 
-    function draw() {
-        ctx.fillStyle = 'rgba(10, 25, 47, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#00ff9d';
-        ctx.font = `${fontSize}px monospace`;
+    function typeWord() {
+        if (wordIndex < words.length) {
+            const word = words[wordIndex];
+            let charIndex = 0;
+            element.textContent = currentText; // Ensure previous words are visible
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+            function typeChar() {
+                if (charIndex < word.length) {
+                    element.textContent += word[charIndex];
+                    charIndex++;
+                    setTimeout(typeChar, delay);
+                } else {
+                    currentText = element.textContent + ' '; // Add space after word
+                    wordIndex++;
+                    // Add a slight delay before typing the next word
+                    setTimeout(typeWord, wordDelay);
+                }
             }
-            drops[i]++;
+            typeChar();
         }
     }
-
-    setInterval(draw, 35);
-}
-
-// Form Validation
-function validateForm(event) {
-    const form = event.target;
-    const name = form.querySelector('#name');
-    const email = form.querySelector('#email');
-    const message = form.querySelector('#message');
-    let isValid = true;
-
-    // Reset errors
-    document.querySelectorAll('.error-message').forEach(el => el.remove());
-
-    // Validate Name
-    if (!name.value.trim()) {
-        showError(name, 'Name is required');
-        isValid = false;
-    }
-
-    // Validate Email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.value.trim() || !emailRegex.test(email.value)) {
-        showError(email, 'Please enter a valid email address');
-        isValid = false;
-    }
-
-    // Validate Message
-    if (!message.value.trim()) {
-        showError(message, 'Message is required');
-        isValid = false;
-    }
-
-    if (!isValid) {
-        event.preventDefault();
-    } else {
-        // Show success message
-        showSuccessMessage();
-    }
-}
-
-function showError(element, message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.style.color = '#ff6b6b';
-    errorDiv.style.fontSize = '0.875rem';
-    errorDiv.style.marginTop = '0.5rem';
-    errorDiv.textContent = message;
-    element.parentNode.appendChild(errorDiv);
-}
-
-function showSuccessMessage() {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message fade-in';
-    successDiv.style.color = '#00ff9d';
-    successDiv.style.padding = '1rem';
-    successDiv.style.marginTop = '1rem';
-    successDiv.style.textAlign = 'center';
-    successDiv.textContent = 'Message sent successfully!';
-    document.querySelector('.contact-form').appendChild(successDiv);
+    typeWord(); // Start the animation
 }
 
 // Easter Egg
@@ -104,33 +162,35 @@ function initEasterEgg() {
             'Back up your data regularly.'
         ];
         const randomTip = tips[Math.floor(Math.random() * tips.length)];
-        
+
         const tipElement = document.createElement('div');
         tipElement.className = 'cyber-tip fade-in';
         tipElement.style.position = 'fixed';
         tipElement.style.bottom = '60px';
         tipElement.style.right = '20px';
-        tipElement.style.backgroundColor = 'var(--bg-secondary)';
+        tipElement.style.backgroundColor = '#1a202c'; /* bg-secondary */
         tipElement.style.padding = '1rem';
         tipElement.style.borderRadius = '4px';
         tipElement.style.maxWidth = '300px';
         tipElement.style.zIndex = '1000';
         tipElement.textContent = `🔒 Security Tip: ${randomTip}`;
-        
+
         document.body.appendChild(tipElement);
         setTimeout(() => tipElement.remove(), 3000);
     });
 }
 
-// Mobile Menu
+// Mobile Menu (updated for A11y)
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav__links');
-    
+    const navLinks = document.querySelector('.nav__links'); // This is the UL element
+
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', () => {
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+            hamburger.setAttribute('aria-expanded', !isExpanded);
             navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
+            hamburger.classList.toggle('active'); // For visual hamburger animation
         });
 
         // Close menu when clicking outside
@@ -138,6 +198,7 @@ function initMobileMenu() {
             if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
                 navLinks.classList.remove('active');
                 hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false'); // Reset aria-expanded
             }
         });
     }
@@ -145,17 +206,17 @@ function initMobileMenu() {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    createMatrixBackground();
+    // Initialize Particles.js background
+    initParticlesBackground();
     initEasterEgg();
     initMobileMenu();
-    
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', validateForm);
-    }
+
+    // Tagline for typing animation
+    const taglineText = "Engineering seamless systems with DevOps, development, and deep network understanding.";
+    typeTagline('animated-tagline', taglineText, 70, 300); // Adjust delay and wordDelay as needed
 });
 
-// Smooth scroll for navigation links
+// Smooth scroll for navigation links (ensure these links actually exist on the page)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -164,11 +225,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             target.scrollIntoView({
                 behavior: 'smooth'
             });
+            // For skip-link, ensure focus is moved to the target
+            if (this.classList.contains('skip-link')) {
+                target.focus();
+            }
         }
     });
 });
 
-// Loading Animation
+// Loading Animation (if you have a .loading element in your HTML)
 window.addEventListener('load', () => {
     const loading = document.querySelector('.loading');
     if (loading) {
@@ -177,4 +242,4 @@ window.addEventListener('load', () => {
             loading.remove();
         }, 500);
     }
-}); 
+});

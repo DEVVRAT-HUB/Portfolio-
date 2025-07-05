@@ -1,6 +1,6 @@
 /* Custom Properties */
 :root {
-  --primary-color: #00ff9d;
+  --primary-color: #8daf1b;
   --secondary-color: #0a192f;
   --text-primary: #e6f1ff;
   --text-secondary: #8892b0;
@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgba(10, 25, 47, 0.85);
+  background-color: rgba(5, 44, 39, 0.85);
   backdrop-filter: blur(10px);
   z-index: 1000;
   padding: 1rem 0;

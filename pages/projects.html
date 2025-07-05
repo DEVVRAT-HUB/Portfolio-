@@ -3,183 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Jai Thakur</title>
+    <title>Projects - Devvrat Pundir</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN with custom configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-accent': '#00ff9d', /* Bright green from original */
+                        'bg-secondary': '#1a202c',  /* Dark gray for secondary backgrounds */
+                        'text-secondary': '#a0aec0', /* Light gray for secondary text */
+                        'text-primary': '#edf2f7',   /* Off-white for primary text */
+                        'error-red': '#ff6b6b',     /* For error messages */
+                        'timeline-accent': '#00BFFF', /* Accent color for timeline and skill bars (retained from about.html) */
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'], /* Main font */
+                        mono: ['Fira Code', 'monospace'],     /* Code/label font */
+                    },
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
-        .projects-section {
-            max-width: 1200px;
-            margin: 120px auto 0;
-            padding: 2rem;
+        /* Base body styles are now mostly handled by Tailwind classes directly on <body> */
+        body {
+            @apply bg-gray-900 text-text-primary min-h-screen font-sans;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        /* Project Card Hover Effect */
+        .project-card:hover {
+            transform: translateY(-5px); /* Subtle lift on hover */
         }
 
-        .project-card {
-            position: relative;
-            background-color: var(--bg-secondary);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .project-image {
-            width: 100%;
-            height: 180px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-bottom: 2px solid var(--primary-color);
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:first-child .project-image {
-            background-size: contain;
-            background-color: #1a1a1a;
-        }
-
+        /* Project Image Hover Effect */
         .project-image:hover {
             transform: scale(1.05);
         }
 
-        .project-content {
-            padding: 2rem;
+        /* Fade-in animation definition */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0; /* Start invisible */
         }
 
-        .project-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* Optional: slight slide up effect */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .project-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tag {
-            font-family: var(--font-code);
-            font-size: 0.875rem;
-            color: var(--primary-color);
-            background-color: rgba(0, 255, 157, 0.1);
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            color: var(--text-primary);
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #00ff9d;
+            color: #1a202c;
+            padding: 8px;
+            z-index: 10000;
             text-decoration: none;
-            font-family: var(--font-code);
-            font-size: 0.875rem;
-            transition: var(--transition);
+            transition: top 0.3s ease-in-out;
+        }
+        .skip-link:focus {
+            top: 0;
         }
 
-        .project-link:hover {
-            color: var(--primary-color);
+        /* Mobile menu specific styles (matching contact.html) */
+        .nav__links {
+            display: none; /* Hidden by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .nav__links {
+                display: flex; /* Flex on medium screens and up */
+            }
+        }
+        .nav__links.active {
+            display: flex;
+            flex-direction: column; /* Show as column when active */
+        }
+        .hamburger {
+            display: block; /* Shown by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .hamburger {
+                display: none; /* Hidden on medium screens and up */
+            }
+        }
+
+        /* Particles.js Container Styling */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Ensure it's behind other content */
+            background-color: #1a202c; /* Fallback background color, should match body or a dark theme */
         }
     </style>
 </head>
-<body>
-    <nav class="nav">
-        <div class="nav__container">
-            <div class="nav__left">
-                <a href="../index.html" class="back-button">← Back to Home</a>
-                <a href="../index.html" class="nav__logo">JT Portfolio</a>
+<body class="bg-gray-900 text-text-primary min-h-screen font-sans">
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8" role="navigation" aria-label="Main Navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="../index.html" class="text-text-secondary hover:text-primary-accent transition-colors duration-300 text-sm md:text-base">← Back to Home</a>
+                <a href="../index.html" class="text-xl md:text-2xl font-bold text-white hover:text-primary-accent transition-colors duration-300">DP Portfolio</a>
             </div>
-            <div class="nav__right">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <ul class="nav__links">
-                    <li><a href="../index.html" class="nav__link">Home</a></li>
-                    <li><a href="about.html" class="nav__link">About</a></li>
-                    <li><a href="projects.html" class="nav__link">Projects</a></li>
-                    <li><a href="contact.html" class="nav__link">Contact</a></li>
-                </ul>
+            <div class="md:hidden">
+                <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white"></span>
+                </button>
             </div>
+            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+                <li role="none"><a href="../index.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Home</a></li>
+                <li role="none"><a href="about.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">About</a></li>
+                <li role="none"><a href="projects.html" class="text-primary-accent font-semibold border-b-2 border-primary-accent pb-1" role="menuitem" aria-current="page">Projects</a></li>
+                <li role="none"><a href="contact.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="projects-section">
-        <h1>Projects</h1>
-        <div class="projects-grid">
-            <div class="project-card fade-in">
-                <div class="project-image" style="background-image: url('../assets/images/app_logo.jpg');"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Fitness Tracker App</h3>
-                    <p class="project-description">
-                        A cross-platform fitness application designed to assist users in tracking workouts, progress, and fitness goals. Features an intuitive interface with locally functional modules for exercise logging and routine planning.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">React Native</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">Express</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/Jaythakur0005/SparkFit_FitnessApp" class="project-link" target="_blank">View Project →</a>
-                    </div>
-                </div>
-            </div>
+    <main id="main-content" class="max-w-6xl mx-auto px-4 py-12 md:py-20">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-8 text-center fade-in">My Projects</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <div class="project-card fade-in">
-                <div class="project-image" style="background-image: url('../assets/images/bookstore.jpg');"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Book Store Management System</h3>
-                    <p class="project-description">
-                        A Python-based application built to streamline the management of library book records. Utilizing data structures and algorithms (DSA), it enables secure login, book addition, deletion, and search by ID.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">DSA</span>
+            <!-- Project Card 1: Dialer -->
+            <article class="project-card bg-bg-secondary rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden fade-in">
+                <img src="../assets/images/project-dialer.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x200/1a202c/a0aec0?text=Dialer+Image';" alt="Dialer Project" class="project-image w-full h-48 object-cover border-b-2 border-primary-accent transition-transform duration-300">
+                <div class="project-content p-6">
+                    <h3 class="project-title text-2xl font-semibold text-primary-accent mb-3">Dialer</h3>
+                    <p class="project-description text-text-secondary mb-4 leading-relaxed">A versatile dialer application, developed in multiple iterations to showcase evolving UI/UX and functionality improvements, including saving and updating numbers.</p>
+                    <div class="project-tech flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Java</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Android</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">UI/UX</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project →</a>
+                    <div class="project-links flex gap-4">
+                        <a href="https://github.com/DEVVRAT-HUB/CALLER-ID-LOOKUP" target="_blank" rel="noopener noreferrer" class="project-link text-text-primary hover:text-primary-accent font-mono text-sm transition-colors duration-300 flex items-center">
+                            GitHub Repo <span class="ml-1 text-base">→</span>
+                        </a>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <div class="project-card fade-in">
-                <div class="project-image" style="background-image: url('../assets/images/taskmanage.jpg');"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Task Management System</h3>
-                    <p class="project-description">
-                        A database-driven application designed to organize, monitor, and streamline task-related operations. Features task delegation, progress tracking, and comprehensive reporting capabilities.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">MySQL</span>
+            <!-- Project Card 2: Weather API App -->
+            <article class="project-card bg-bg-secondary rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden fade-in">
+                <img src="../assets/images/project-weather-app.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x200/1a202c/a0aec0?text=Weather+App+Image';" alt="Weather API App Project" class="project-image w-full h-48 object-cover border-b-2 border-primary-accent transition-transform duration-300">
+                <div class="project-content p-6">
+                    <h3 class="project-title text-2xl font-semibold text-primary-accent mb-3">Weather API App</h3>
+                    <p class="project-description text-text-secondary mb-4 leading-relaxed">A dynamic weather application that fetches and displays real-time temperature and weather conditions for various cities using a weather API.</p>
+                    <div class="project-tech flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">JavaScript</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">HTML</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">CSS</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">API Integration</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project →</a>
+                    <div class="project-links flex gap-4">
+                        <a href="https://devvrat-hub.github.io/weather-2/" target="_blank" rel="noopener noreferrer" class="project-link text-text-primary hover:text-primary-accent font-mono text-sm transition-colors duration-300 flex items-center">
+                            Live Demo <span class="ml-1 text-base">→</span>
+                        </a>
                     </div>
                 </div>
-            </div>
+            </article>
+
+            <!-- Project Card 3: Task Manager with Modern UI (Todo Manager) -->
+            <article class="project-card bg-bg-secondary rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden fade-in">
+                <img src="../assets/images/project-task-manager.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x200/1a202c/a0aec0?text=Task+Manager+Image';" alt="Task Manager Project" class="project-image w-full h-48 object-cover border-b-2 border-primary-accent transition-transform duration-300">
+                <div class="p-6">
+                    <h3 class="project-title text-2xl font-semibold text-primary-accent mb-3">Task Manager with Modern UI</h3>
+                    <p class="project-description text-text-secondary mb-4 leading-relaxed">A feature-rich task manager application built with a sleek, modern user interface for efficient task organization and productivity.</p>
+                    <div class="project-tech flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">HTML</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">CSS</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">JavaScript</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Modern UI</span>
+                    </div>
+                    <div class="project-links flex gap-4">
+                        <a href="https://devvrat-hub.github.io/Task-manager-frontend/" target="_blank" rel="noopener noreferrer" class="project-link text-text-primary hover:text-primary-accent font-mono text-sm transition-colors duration-300 flex items-center">
+                            Live Demo <span class="ml-1 text-base">→</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project Card 4: Landing Page for Zayyaah Co. -->
+            <article class="project-card bg-bg-secondary rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden fade-in">
+                <img src="../assets/images/project-zayyaah-landing.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x200/1a202c/a0aec0?text=Zayyaah+Landing+Image';" alt="Zayyaah Co. Landing Page Project" class="project-image w-full h-48 object-cover border-b-2 border-primary-accent transition-transform duration-300">
+                <div class="project-content p-6">
+                    <h3 class="project-title text-2xl font-semibold text-primary-accent mb-3">Zayyaah Co. Landing Page</h3>
+                    <p class="project-description text-text-secondary mb-4 leading-relaxed">A captivating and responsive landing page designed for Zayyaah Co., a jewellery website, focusing on elegant aesthetics and user engagement.</p>
+                    <div class="project-tech flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">HTML</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">CSS</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Responsive Design</span>
+                    </div>
+                    <div class="project-links flex gap-4">
+                        <a href="https://devvrat-hub.github.io/Landing-page.v1/" target="_blank" rel="noopener noreferrer" class="project-link text-text-primary hover:text-primary-accent font-mono text-sm transition-colors duration-300 flex items-center">
+                            Live Demo <span class="ml-1 text-base">→</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project Card 5: Text Encrypter -->
+            <article class="project-card bg-bg-secondary rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden fade-in">
+                <img src="../assets/images/project-text-encrypter.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x200/1a202c/a0aec0?text=Text+Encrypter+Image';" alt="Text Encrypter Project" class="project-image w-full h-48 object-cover border-b-2 border-primary-accent transition-transform duration-300">
+                <div class="p-6">
+                    <h3 class="project-title text-2xl font-semibold text-primary-accent mb-3">Text Encrypter</h3>
+                    <p class="project-description text-text-secondary mb-4 leading-relaxed">Various versions of text encrypter from basic to advanced encryption, demonstrating growing skills in cryptography and security.</p>
+                    <div class="project-tech flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Python</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Cryptography</span>
+                        <span class="tech-tag font-mono text-sm text-primary-accent bg-primary-accent bg-opacity-10 py-1 px-3 rounded-md">Security</span>
+                    </div>
+                    <div class="project-links flex gap-4">
+                        <a href="https://github.com/DEVVRAT-HUB/text.encrypter" target="_blank" rel="noopener noreferrer" class="project-link text-text-primary hover:text-primary-accent font-mono text-sm transition-colors duration-300 flex items-center">
+                            GitHub Repo <span class="ml-1 text-base">→</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </main>
 
     <div class="easter-egg">🔒</div>
 
+    <footer class="bg-gray-800 text-text-secondary py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 Devvrat Pundir. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
-</html> 
+</html>

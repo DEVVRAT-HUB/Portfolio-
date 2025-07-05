@@ -3,188 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Jai Thakur</title>
+    <title>Contact - Devvrat Pundir</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <style>
-        .contact-section {
-            max-width: 1200px;
-            margin: 120px auto 0;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        @media (max-width: 768px) {
-            .contact-section {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+    <!-- Tailwind CSS CDN with custom configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-accent': '#00ff9d', /* Corresponds to original --primary-color */
+                        'bg-secondary': '#1a202c',  /* Corresponds to original --bg-secondary */
+                        'text-secondary': '#a0aec0', /* Corresponds to original --text-secondary */
+                        'text-primary': '#edf2f7',   /* Off-white for primary text */
+                        'error-red': '#ff6b6b',     /* For error messages */
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'], /* Main font */
+                        mono: ['Fira Code', 'monospace'],     /* Code/label font */
+                    },
+                }
             }
         }
+    </script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Base body styles are now mostly handled by Tailwind classes directly on <body> */
+        /* Custom styles for elements that need specific overrides or JS-added styles */
 
         .contact-info {
-            padding: 2rem;
             background-color: var(--bg-secondary);
-            border-radius: 8px;
-            height: fit-content;
         }
-
-        .contact-item {
-            margin-bottom: 1.5rem;
-        }
-
         .contact-label {
-            font-family: var(--font-code);
+            font-family: 'Fira Code', monospace;
             color: var(--primary-color);
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-            display: block;
         }
-
         .contact-value {
             color: var(--text-secondary);
         }
-
         .contact-value a {
             color: var(--text-primary);
-            text-decoration: none;
-            transition: var(--transition);
+            text-decoration: none; /* Tailwind's default for links doesn't remove underline */
+            transition: all 0.3s ease-in-out; /* Explicit transition for links */
         }
-
         .contact-value a:hover {
             color: var(--primary-color);
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
         .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
             color: var(--text-primary);
-            font-family: var(--font-code);
+            font-family: 'Fira Code', monospace;
         }
-
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem;
+        .form-input, .form-textarea {
             background-color: var(--bg-secondary);
-            border: 1px solid var(--text-secondary);
-            border-radius: 4px;
+            border-color: var(--text-secondary);
             color: var(--text-primary);
-            font-family: var(--font-main);
-            transition: var(--transition);
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s ease-in-out; /* Explicit transition for inputs */
         }
-
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
+        .form-input:focus, .form-textarea:focus {
+            outline: none; /* Remove default outline */
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.1);
         }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+        /* New: Subtle hover effect for form inputs/textareas */
+        .form-input:hover, .form-textarea:hover {
+            border-color: var(--primary-color); /* Change border on hover */
         }
 
         .social-link {
             color: var(--text-primary);
-            text-decoration: none;
-            font-family: var(--font-code);
-            font-size: 0.875rem;
-            transition: var(--transition);
+            font-family: 'Fira Code', monospace;
+            text-decoration: none; /* Ensure no underline */
+            transition: all 0.3s ease-in-out; /* Explicit transition for social links */
         }
-
         .social-link:hover {
             color: var(--primary-color);
         }
+        .btn {
+            /* Tailwind classes for button styling */
+            @apply bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300;
+        }
+        /* Styles for error messages added by JS */
+        .error-message {
+            color: #ff6b6b; /* Red color for errors */
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        .success-message {
+            color: #00ff9d; /* Green color for success */
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        /* Basic styling for the hamburger and nav links for mobile, assuming styles.css handles active states */
+        .nav__links {
+            display: none; /* Hidden by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .nav__links {
+                display: flex; /* Flex on medium screens and up */
+            }
+        }
+        .nav__links.active {
+            display: flex;
+            flex-direction: column; /* Show as column when active */
+        }
+        .hamburger {
+            display: block; /* Shown by default */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .hamburger {
+                display: none; /* Hidden on medium screens and up */
+            }
+        }
+        /* Input error styling */
+        .input-error {
+            border-color: #ff6b6b !important; /* Red border for invalid inputs */
+        }
+
+        /* Fade-in animation definition */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0; /* Start invisible */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* Optional: slight slide up effect */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #00ff9d;
+            color: #1a202c;
+            padding: 8px;
+            z-index: 10000;
+            text-decoration: none;
+            transition: top 0.3s ease-in-out;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Particles.js Container Styling */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Ensure it's behind other content */
+            background-color: #1a202c; /* Fallback background color, should match body or a dark theme */
+        }
     </style>
 </head>
-<body>
-    <nav class="nav">
-        <div class="nav__container">
-            <div class="nav__left">
-                <a href="../index.html" class="back-button">← Back to Home</a>
-                <a href="../index.html" class="nav__logo">JT Portfolio</a>
+<body class="text-text-primary min-h-screen font-sans">
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8" role="navigation" aria-label="Main Navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="../index.html" class="text-text-secondary hover:text-primary-accent transition-colors duration-300 text-sm md:text-base">← Back to Home</a>
+                <a href="../index.html" class="text-xl md:text-2xl font-bold text-white hover:text-primary-accent transition-colors duration-300">DP Portfolio</a>
             </div>
-            <div class="nav__right">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <ul class="nav__links">
-                    <li><a href="../index.html" class="nav__link">Home</a></li>
-                    <li><a href="about.html" class="nav__link">About</a></li>
-                    <li><a href="projects.html" class="nav__link">Projects</a></li>
-                    <li><a href="contact.html" class="nav__link">Contact</a></li>
-                </ul>
+            <div class="md:hidden">
+                <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+                    <span class="block w-6 h-0.5 bg-white"></span>
+                </button>
             </div>
+            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+                <li role="none"><a href="../index.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Home</a></li>
+                <li role="none"><a href="about.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">About</a></li>
+                <li role="none"><a href="projects.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Projects</a></li>
+                <li role="none"><a href="contact.html" class="text-primary-accent font-semibold border-b-2 border-primary-accent pb-1" role="menuitem" aria-current="page">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="contact-section">
-        <div class="contact-form fade-in">
-            <h1>Get in Touch</h1>
-            <p style="color: var(--text-secondary); margin: 1rem 0 2rem;">
+    <main id="main-content" class="max-w-6xl mx-auto px-4 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+        <div class="contact-form fade-in bg-bg-secondary p-8 rounded-lg shadow-xl">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
+            <p class="text-text-secondary mb-8 leading-relaxed">
                 Have a question or want to work together? Feel free to reach out!
             </p>
-            <form id="contact-form" onsubmit="return false;">
-                <div class="form-group">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" id="name" class="form-input" placeholder="Your name">
+            <form id="contact-form" action="https://formspree.io/f/mjkrdkqv" method="POST" aria-live="polite">
+                <div class="mb-6">
+                    <label for="name" class="block text-text-secondary text-sm font-semibold mb-2 font-mono">Name</label>
+                    <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-text-primary placeholder-gray-500 focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent transition-all duration-300" placeholder="Your name" aria-required="true" aria-describedby="name-error">
+                    <div id="name-error" class="error-message" role="alert"></div>
                 </div>
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="your.email@example.com">
+                <div class="mb-6">
+                    <label for="email" class="block text-text-secondary text-sm font-semibold mb-2 font-mono">Email</label>
+                    <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-text-primary placeholder-gray-500 focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent transition-all duration-300" placeholder="your.email@example.com" aria-required="true" aria-describedby="email-error">
+                    <div id="email-error" class="error-message" role="alert"></div>
                 </div>
-                <div class="form-group">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea id="message" class="form-textarea" placeholder="Your message"></textarea>
+                <div class="mb-6">
+                    <label for="message" class="block text-text-secondary text-sm font-semibold mb-2 font-mono">Message</label>
+                    <textarea id="message" name="message" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-text-primary placeholder-gray-500 min-h-[150px] resize-y focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent transition-all duration-300" placeholder="Your message" aria-required="true" aria-describedby="message-error"></textarea>
+                    <div id="message-error" class="error-message" role="alert"></div>
                 </div>
-                <button type="submit" class="btn">Send Message</button>
+                <button type="submit" class="bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300">Send Message</button>
             </form>
         </div>
 
-        <div class="contact-info fade-in">
-            <h2>Contact Information</h2>
-            <div class="contact-item">
-                <span class="contact-label">Email</span>
-                <div class="contact-value">
-                    <a href="mailto:jaithakur0005@gmail.com">jaithakur0005@gmail.com</a>
+        <div class="contact-info fade-in bg-bg-secondary p-8 rounded-lg shadow-xl h-fit">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Contact Information</h2>
+            <div class="mb-6">
+                <span class="block text-primary-accent text-sm font-mono mb-1">Email</span>
+                <div class="text-text-primary">
+                    <a href="mailto:devpundir97@gmail.com">devpundir97@gmail.com</a>
                 </div>
             </div>
-            <div class="contact-item">
-                <span class="contact-label">Phone</span>
-                <div class="contact-value">
-                    <a href="tel:9728944994">+91 9728944994</a>
+            <div class="mb-6">
+                <span class="block text-primary-accent text-sm font-mono mb-1">Phone</span>
+                <div class="text-text-primary">
+                    <a href="tel:919760702614">+91 9760702614</a>
                 </div>
             </div>
-            <div class="contact-item">
-                <span class="contact-label">Location</span>
-                <div class="contact-value">Dehradun, India</div>
+            <div class="mb-6">
+                <span class="block text-primary-accent text-sm font-mono mb-1">Location</span>
+                <div class="text-text-secondary">Dehradun, India</div>
             </div>
-            <div class="social-links">
-                <a href="https://linkedin.com/in/jai-thakur-788ab728b" target="_blank" class="social-link">LinkedIn →</a>
-                <a href="https://github.com/JaiThakur0005" target="_blank" class="social-link">GitHub →</a>
+            <div class="flex flex-wrap gap-4 mt-8">
+                <a href="https://www.linkedin.com/in/dev-pundir-b65238242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary-accent hover:text-white font-mono text-sm transition-colors duration-300 flex items-center">
+                    LinkedIn <span class="ml-1 text-base">→</span>
+                </a>
+                <a href="https://github.com/DEVVRRAT-HUB" target="_blank" class="text-primary-accent hover:text-white font-mono text-sm transition-colors duration-300 flex items-center">
+                    GitHub <span class="ml-1 text-base">→</span>
+                </a>
             </div>
         </div>
     </main>
 
     <div class="easter-egg">🔒</div>
 
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
-</html> 
+</html>
