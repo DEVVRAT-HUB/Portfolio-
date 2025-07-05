@@ -72,39 +72,90 @@
 
         /* Mobile menu specific styles (matching other pages) */
         .nav__links {
-            display: none; /* Hidden by default */
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .nav__links {
-                display: flex; /* Flex on medium screens and up */
+            display: flex; /* Always flex for layout, but hidden off-screen */
+            flex-direction: column;
+            position: fixed; /* Fixed to cover content */
+            top: 0;
+            right: -100%; /* Start off-screen to the right */
+            width: 75%; /* Cover 75% of screen width */
+            max-width: 300px; /* Max width for larger screens */
+            height: 100vh; /* Full viewport height */
+            background-color: theme('colors.bg-secondary'); /* Dark background for menu */
+            padding: 2rem 1rem; /* Padding inside the menu */
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5); /* Shadow for slide effect */
+            transition: right 0.3s ease-in-out; /* Smooth slide transition */
+            z-index: 99; /* Above main content, below loading spinner */
+            list-style: none; /* Remove default list bullets */
+            text-align: center; /* Center links */
+            justify-content: center; /* Vertically center links */
+            gap: 1.5rem; /* Space between links */
+
+            /* Hide on medium screens and up */
+            @media (min-width: 768px) {
+                position: static;
+                flex-direction: row;
+                height: auto;
+                width: auto;
+                background-color: transparent;
+                padding: 0;
+                box-shadow: none;
+                transition: none;
+                z-index: auto;
+                display: flex; /* Show as flex on medium and up */
+                gap: 1.5rem; /* Space between links */
             }
         }
         .nav__links.active {
-            display: flex;
-            flex-direction: column; /* Show as column when active */
-            position: absolute; /* Position over content */
-            top: 100%; /* Below nav bar */
-            left: 0;
-            width: 100%;
-            background-color: #1a202c; /* bg-secondary */
-            padding: 1rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            z-index: 50; /* Above main content */
+            right: 0; /* Slide into view */
         }
-        .nav__links.active li {
-            text-align: center;
-            margin-bottom: 0.5rem;
+        .nav__links li {
+            margin: 0; /* Reset margin */
         }
-        .nav__links.active a {
+        .nav__links a {
             display: block;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
+            color: theme('colors.text-primary'); /* Default link color */
+            font-size: 1.125rem; /* Larger font size for mobile menu */
+            transition: color 0.3s ease-in-out;
         }
+        .nav__links a:hover {
+            color: theme('colors.primary-accent');
+        }
+        .nav__links .text-primary-accent { /* Ensure active link color is visible */
+            color: theme('colors.primary-accent');
+        }
+
+        /* Hamburger Icon Animation */
         .hamburger {
-            display: block; /* Shown by default */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 100; /* Ensure it's above the menu */
+            transition: all 0.3s ease-in-out;
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: theme('colors.text-primary'); /* White lines */
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+        @media (min-width: 768px) { /* Hide hamburger on medium screens and up */
             .hamburger {
-                display: none; /* Hidden on medium screens and up */
+                display: none;
             }
         }
 
@@ -168,17 +219,16 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8" role="navigation" aria-label="Main Navigation">
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 relative z-50" role="navigation" aria-label="Main Navigation">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <!-- Back to Home link is not needed on the Home page itself -->
                 <a href="index.html" class="text-xl md:text-2xl font-bold text-white hover:text-primary-accent transition-colors duration-300">DP Portfolio</a>
             </div>
             <div class="md:hidden">
                 <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
                 </button>
             </div>
             <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
@@ -192,19 +242,25 @@
 
     <main id="main-content" class="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12 md:py-20">
         <section class="hero__content text-center max-w-4xl mx-auto fade-in">
-            <div class="profile-container mb-8 md:mb-12">
-                <div class="profile-photo flex-shrink-0 w-64 h-64 rounded-lg overflow-hidden border-4 border-primary-accent mx-auto shadow-lg mb-6
-                            transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-accent/30">
-                    <img src="assets/images/profile.jpg" onerror="this.onerror=null;this.src='https://placehold.co/256x256/1a202c/a0aec0?text=Profile';" alt="Devvrat Pundir" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+            <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-6 flex items-center justify-center">
+                <!-- Circular Text Container - will be filled by JS -->
+                <div id="circular-text" class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                    <!-- Text characters will be dynamically inserted here -->
                 </div>
-                <div class="profile-info">
-                    <h1 class="hero__title text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Devvrat Pundir</h1>
-                    <p class="hero__subtitle text-xl md:text-2xl text-text-secondary mb-3">B.Tech Student at UPES Dehradun</p>
-                    <p class="hero__subtitle text-lg md:text-xl text-text-secondary mb-8" id="animated-tagline">
-                        <!-- Tagline will be animated here by JavaScript -->
-                    </p>
-                    <a href="pages/about.html" class="btn bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300 inline-block shadow-md hover:shadow-xl">Learn More</a>
+
+                <!-- Profile Photo (Inner Circle) -->
+                <div class="profile-photo relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary-accent mx-auto shadow-lg
+                            transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-accent/30 z-10">
+                    <img src="assets/images/profile.jpg" onerror="this.onerror=null;this.src='https://placehold.co/256x256/1a202c/a0aec0?text=Profile';" alt="Devvrat Pundir" class="w-full h-full object-cover">
                 </div>
+            </div>
+            <div class="profile-info">
+                <h1 class="hero__title text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Devvrat Pundir</h1>
+                <p class="hero__subtitle text-xl md:text-2xl text-text-secondary mb-3">B.Tech Student at UPES Dehradun</p>
+                <p class="hero__subtitle text-lg md:text-xl text-text-secondary mb-8" id="animated-tagline">
+                    <!-- Tagline will be animated here by JavaScript -->
+                </p>
+                <a href="pages/about.html" class="btn bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300 inline-block shadow-md hover:shadow-xl">Learn More</a>
             </div>
         </section>
     </main>
