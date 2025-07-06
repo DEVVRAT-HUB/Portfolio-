@@ -70,9 +70,9 @@
             top: 0;
         }
 
-        /* Mobile menu specific styles */
+        /* Mobile menu specific styles - IMPORTANT: using !important for display properties to ensure override */
         .nav__links {
-            display: none; /* Hidden by default on small screens */
+            display: none !important; /* Hidden by default on small screens */
             flex-direction: column;
             position: fixed; /* Fixed to cover content */
             top: 0;
@@ -91,22 +91,22 @@
             gap: 1.5rem; /* Space between links */
         }
         .nav__links.active {
-            right: 0; /* Slide into view */
-            display: flex; /* Show when active */
+            right: 0 !important; /* Slide into view */
+            display: flex !important; /* Show when active */
         }
         @media (min-width: 768px) { /* md breakpoint */
             .nav__links {
-                position: static; /* Static position on desktop */
-                flex-direction: row;
-                height: auto;
-                width: auto;
-                background-color: transparent;
-                padding: 0;
-                box-shadow: none;
-                transition: none;
-                z-index: auto;
-                display: flex; /* Always show as flex on medium and up */
-                gap: 1rem; /* Adjusted spacing for desktop navigation */
+                position: static !important; /* Static position on desktop */
+                flex-direction: row !important;
+                height: auto !important;
+                width: auto !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                transition: none !important;
+                z-index: auto !important;
+                display: flex !important; /* Always show as flex on medium and up */
+                gap: 1rem !important; /* Adjusted spacing for desktop navigation */
             }
         }
         .nav__links li {
@@ -127,9 +127,9 @@
             color: theme('colors.primary-accent');
         }
 
-        /* Hamburger Icon Animation */
+        /* Hamburger Icon Animation - IMPORTANT: using !important for display properties to ensure override */
         .hamburger {
-            display: flex; /* Show by default on small screens */
+            display: flex !important; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
             width: 30px;
@@ -160,7 +160,7 @@
         }
         @media (min-width: 768px) { /* Hide hamburger on medium screens and up */
             .hamburger {
-                display: none;
+                display: none !important;
             }
         }
 
@@ -312,9 +312,9 @@
         </div>
     </nav>
 
-    <main id="main-content" class="max-w-6xl mx-auto px-4 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+    <main id="main-content" class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div class="contact-form fade-in bg-bg-secondary p-8 rounded-lg shadow-xl">
-            <h1 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
+            <h1 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-6">Get in Touch</h1>
             <p class="text-text-secondary mb-8 leading-relaxed text-base">
                 Have a question or want to work together? Feel free to reach out!
             </p>
@@ -339,7 +339,7 @@
         </div>
 
         <div class="contact-info fade-in bg-bg-secondary p-8 rounded-lg shadow-xl h-fit">
-            <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-6">Contact Information</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-4">Contact Information</h2>
             <div class="mb-6">
                 <span class="block text-primary-accent text-sm font-mono mb-1">Email</span>
                 <div class="text-text-primary text-base">

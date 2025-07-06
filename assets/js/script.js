@@ -339,7 +339,7 @@ function initEasterEgg() {
         tipElement.style.position = 'fixed';
         tipElement.style.bottom = '60px';
         tipElement.style.right = '20px';
-        tipElement.style.backgroundColor = 'var(--bg-secondary)'; /* Using var() here - consider replacing with Tailwind custom color if possible */
+        tipElement.style.backgroundColor = '#1a202c'; /* bg-secondary */
         tipElement.style.padding = '1rem';
         tipElement.style.borderRadius = '4px';
         tipElement.style.maxWidth = '300px';
@@ -351,53 +351,101 @@ function initEasterEgg() {
     });
 }
 
-// Mobile Menu (updated for A11y)
+// Mobile Menu (updated for A11y and Swipe)
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav__links'); // This is the UL element
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    if (hamburger && navLinks) {
-        // Function to close menu
-        const closeMenu = () => {
+    const toggleMenu = (open) => {
+        if (open) {
+            navLinks.classList.add('active');
+            hamburger.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        } else {
             navLinks.classList.remove('active');
             hamburger.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
-            // Re-enable body scroll if it was disabled
-            document.body.style.overflow = '';
-        };
+            document.body.style.overflow = ''; // Re-enable scrolling
+        }
+    };
 
+    if (hamburger && navLinks) {
         hamburger.addEventListener('click', () => {
-            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
-            hamburger.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active'); // For visual hamburger animation
-
-            // Disable/enable body scroll when menu is open/closed
-            if (navLinks.classList.contains('active')) {
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-            } else {
-                document.body.style.overflow = '';
-            }
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            toggleMenu(!isExpanded);
         });
 
         // Close menu when clicking on a navigation link
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
+            link.addEventListener('click', () => toggleMenu(false));
         });
 
         // Close menu when clicking outside (only on mobile/small screens)
         document.addEventListener('click', (e) => {
             // Check if click is outside hamburger and navLinks AND if navLinks is currently active
             if (window.innerWidth < 768 && !hamburger.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
-                closeMenu();
+                toggleMenu(false);
             }
         });
 
         // Close menu on resize if it's open and screen becomes desktop size
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768 && navLinks.classList.contains('active')) {
-                closeMenu();
+                toggleMenu(false);
             }
+        });
+
+        // Swipe Gestures for Mobile Menu
+        document.addEventListener('touchstart', (e) => {
+            // Only track if the menu is closed or if the touch starts near the left edge to open
+            // or if it starts on the menu itself to close
+            if (!navLinks.classList.contains('active') && e.touches[0].clientX < 50) { // Swipe from left edge to open
+                touchStartX = e.touches[0].clientX;
+            } else if (navLinks.classList.contains('active')) { // If menu is open, track any touch to close
+                touchStartX = e.touches[0].clientX;
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (touchStartX === 0) return; // No valid start touch
+            touchEndX = e.touches[0].clientX;
+
+            const swipeDistance = touchEndX - touchStartX;
+
+            // If menu is closed and swiping right from left edge
+            if (!navLinks.classList.contains('active') && touchStartX < 50 && swipeDistance > 50) {
+                toggleMenu(true);
+                touchStartX = 0; // Reset to prevent further triggering
+            }
+            // If menu is open and swiping left
+            else if (navLinks.classList.contains('active') && swipeDistance < -50) {
+                toggleMenu(false);
+                touchStartX = 0; // Reset to prevent further triggering
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            touchStartX = 0;
+            touchEndX = 0;
+        });
+    }
+}
+
+// Enhanced Button Interaction (only for index.html)
+function initButtonHoverEffect() {
+    const learnMoreButton = document.querySelector('.hero__content .btn');
+    if (learnMoreButton) {
+        learnMoreButton.style.transition = 'transform 0.2s ease-out'; // Add transition for smooth effect
+
+        learnMoreButton.addEventListener('mouseover', () => {
+            learnMoreButton.style.transform = 'scale(1.05)'; // Scale up slightly on hover
+        });
+
+        learnMoreButton.addEventListener('mouseout', () => {
+            learnMoreButton.style.transform = 'scale(1)'; // Scale back down on mouse out
         });
     }
 }
@@ -418,18 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Enhanced Button Interaction (only for index.html)
-    const learnMoreButton = document.querySelector('.hero__content .btn');
-    if (learnMoreButton) {
-        learnMoreButton.style.transition = 'transform 0.2s ease-out'; // Add transition for smooth effect
-
-        learnMoreButton.addEventListener('mouseover', () => {
-            learnMoreButton.style.transform = 'scale(1.05)'; // Scale up slightly on hover
-        });
-
-        learnMoreButton.addEventListener('mouseout', () => {
-            learnMoreButton.style.transform = 'scale(1)'; // Scale back down on mouse out
-        });
-    }
+    initButtonHoverEffect();
 
     const contactForm = document.querySelector('#contact-form');
     if (contactForm) {
