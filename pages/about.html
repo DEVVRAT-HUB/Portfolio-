@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary-accent': '#00ff9d', /* Bright green from original */
+                        'primary-accent': '#00ff9d', /* Bright green from original (used for general accents) */
                         'bg-secondary': '#1a202c',  /* Dark gray for secondary backgrounds */
                         'text-secondary': '#a0aec0', /* Light gray for secondary text */
                         'text-primary': '#edf2f7',   /* Off-white for primary text */
@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
         /* Base body styles are now mostly handled by Tailwind classes directly on <body> */
+        /* Custom styles for elements that need specific overrides or JS-added styles */
+
+        /* Override default body background to ensure Tailwind classes take precedence */
         body {
             @apply bg-gray-900 text-text-primary min-h-screen font-sans;
         }
@@ -76,7 +79,7 @@
 
         /* Mobile menu specific styles */
         .nav__links {
-            display: flex; /* Always flex for layout, but hidden off-screen */
+            display: none; /* Hidden by default on small screens */
             flex-direction: column;
             position: fixed; /* Fixed to cover content */
             top: 0;
@@ -93,10 +96,14 @@
             text-align: center; /* Center links */
             justify-content: center; /* Vertically center links */
             gap: 1.5rem; /* Space between links */
-
-            /* Hide on medium screens and up */
-            @media (min-width: 768px) {
-                position: static;
+        }
+        .nav__links.active {
+            right: 0; /* Slide into view */
+            display: flex; /* Show when active */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .nav__links {
+                position: static; /* Static position on desktop */
                 flex-direction: row;
                 height: auto;
                 width: auto;
@@ -105,19 +112,16 @@
                 box-shadow: none;
                 transition: none;
                 z-index: auto;
-                display: flex; /* Show as flex on medium and up */
-                gap: 1.5rem; /* Space between links */
+                display: flex; /* Always show as flex on medium and up */
+                gap: 1rem; /* Adjusted spacing for desktop navigation */
             }
-        }
-        .nav__links.active {
-            right: 0; /* Slide into view */
         }
         .nav__links li {
             margin: 0; /* Reset margin */
         }
         .nav__links a {
             display: block;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 1rem; /* Good tappable area */
             color: theme('colors.text-primary'); /* Default link color */
             font-size: 1.125rem; /* Larger font size for mobile menu */
             transition: color 0.3s ease-in-out;
@@ -132,7 +136,7 @@
 
         /* Hamburger Icon Animation */
         .hamburger {
-            display: flex;
+            display: flex; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
             width: 30px;
@@ -140,6 +144,9 @@
             cursor: pointer;
             z-index: 100; /* Ensure it's above the menu */
             transition: all 0.3s ease-in-out;
+            min-width: 44px; /* Ensure minimum tappable area */
+            min-height: 44px; /* Ensure minimum tappable area */
+            align-items: center; /* Center lines within the button */
         }
         .hamburger span {
             display: block;
@@ -175,40 +182,6 @@
             background-color: #1a202c; /* Fallback background color, should match body or a dark theme */
         }
 
-        /* Loading Spinner Styles (Adjusted for Tailwind colors) */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: theme('colors.bg-secondary'); /* Use Tailwind color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .loading.fade-out {
-            opacity: 0;
-            pointer-events: none; /* Disable interaction after fade out */
-        }
-
-        .loading__spinner {
-            border: 8px solid rgba(0, 255, 157, 0.2); /* primary-accent with opacity */
-            border-top: 8px solid theme('colors.primary-accent'); /* primary-accent */
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Skill Progress Bar Styling */
         .skill-progress-bar-bg {
             background-color: #2d3748; /* A slightly lighter dark gray for the background of the bar */
@@ -218,7 +191,7 @@
             width: 100%; /* Ensure it takes full width of its container */
         }
         .skill-progress-bar-fill {
-            background-color: #00ff9d; /* Primary accent color for the fill */
+            background-color: theme('colors.timeline-accent'); /* NOW DEEP SKY BLUE for consistency */
             height: 100%;
             border-radius: 9999px;
             transition: width 0.5s ease-out; /* Smooth animation for width change */
@@ -271,7 +244,7 @@
             width: 16px;
             height: 16px;
             right: -10px; /* Position dot on the line */
-            background-color: #00ff9d; /* Accent color for dots */
+            background-color: theme('colors.timeline-accent'); /* DEEP SKY BLUE */
             border: 2px solid #1a202c; /* Border around dot */
             top: 25px;
             border-radius: 50%;
@@ -289,7 +262,7 @@
         }
 
         .timeline-content {
-            background-color: theme('colors.bg-secondary'); /* Use Tailwind color */
+            background-color: var(--bg-secondary);
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -300,9 +273,10 @@
             transform: translateY(-5px); /* Subtle lift on hover */
         }
 
+        /* Updated timeline-date to use the new timeline accent color */
         .timeline-date {
-            color: theme('colors.primary-accent'); /* Use Tailwind color */
-            font-family: theme('fontFamily.mono'); /* Use Tailwind font */
+            color: theme('colors.timeline-accent'); /* DEEP SKY BLUE */
+            font-family: var(--font-mono);
             font-size: 0.875rem;
             margin-bottom: 0.5rem;
         }
@@ -310,23 +284,16 @@
         .timeline-school {
             font-size: 1.25rem;
             font-weight: 600;
-            color: theme('colors.text-primary'); /* Use Tailwind color */
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
         .timeline-degree {
-            color: theme('colors.text-secondary'); /* Use Tailwind color */
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body class="bg-gray-900 text-text-primary min-h-screen font-sans">
-    <!-- Loading Spinner -->
-    <div class="loading">
-        <div class="loading__content">
-            <div class="loading__spinner"></div>
-        </div>
-    </div>
-
     <!-- Particles.js container -->
     <div id="particles-js"></div>
 
@@ -346,7 +313,7 @@
                     <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
                 </button>
             </div>
-            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+            <ul id="main-navigation-links" class="nav__links md:space-x-4 text-lg" role="menu">
                 <li role="none"><a href="../index.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Home</a></li>
                 <li role="none"><a href="about.html" class="text-primary-accent font-semibold border-b-2 border-primary-accent pb-1" role="menuitem" aria-current="page">About</a></li>
                 <li role="none"><a href="projects.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Projects</a></li>
@@ -356,7 +323,7 @@
     </nav>
 
     <main id="main-content" class="max-w-6xl mx-auto px-4 py-12 md:py-20">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-8 fade-in">About Me</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 fade-in">About Me</h1>
         <p class="text-text-secondary mb-12 leading-relaxed text-lg fade-in">
             I’m not just another tech enthusiast — I’m a visionary builder, a bold collaborator, and a relentless problem solver following God’s plan one line of code at a time.
             <br><br>
@@ -403,7 +370,7 @@
             <!-- Programming & Development -->
             <div class="skills-item bg-bg-secondary p-6 rounded-lg shadow-lg transition-transform duration-300 fade-in">
                 <h3 class="text-lg font-bold text-primary-accent font-mono mb-4 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h6M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Programming & Development
                 </h3>
                 <ul class="space-y-4 text-text-secondary">
@@ -467,7 +434,7 @@
             <!-- Tools & Technologies -->
             <div class="skills-item bg-bg-secondary p-6 rounded-lg shadow-lg transition-transform duration-300 fade-in">
                 <h3 class="text-lg font-bold text-primary-accent font-mono mb-4 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1 1v3m-4-3a2 2 0 100 4h1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1 1v3a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H2a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
                     Tools & Technologies
                 </h3>
                 <ul class="space-y-4 text-text-secondary">
@@ -522,7 +489,7 @@
             <!-- Technical Knowledge -->
             <div class="skills-item bg-bg-secondary p-6 rounded-lg shadow-lg transition-transform duration-300 fade-in">
                 <h3 class="text-lg font-bold text-primary-accent font-mono mb-4 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m14-6h2m-2 6h2M15 9a3 3 0 11-6 0 3 3 0 016 0zm0 6a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.832 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.168 18 16.5 18s-3.332.477-4.5 1.253"></path></svg>
                     Technical Knowledge
                 </h3>
                 <ul class="space-y-4 text-text-secondary">
@@ -559,7 +526,7 @@
             <!-- Soft Skills -->
             <div class="skills-item bg-bg-secondary p-6 rounded-lg shadow-lg transition-transform duration-300 fade-in">
                 <h3 class="text-lg font-bold text-primary-accent font-mono mb-4 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 22.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <svg class="w-6 h-6 mr-2 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     Soft Skills
                 </h3>
                 <ul class="space-y-2 text-text-secondary">

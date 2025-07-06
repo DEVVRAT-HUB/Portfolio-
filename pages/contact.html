@@ -7,10 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN with custom configuration -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Moved tailwind.config here to ensure Tailwind is loaded first
+        // Ensure tailwind.config runs after Tailwind CSS library is loaded
         tailwind.config = {
             theme: {
                 extend: {
@@ -72,7 +72,7 @@
 
         /* Mobile menu specific styles */
         .nav__links {
-            display: flex; /* Always flex for layout, but hidden off-screen */
+            display: none; /* Hidden by default on small screens */
             flex-direction: column;
             position: fixed; /* Fixed to cover content */
             top: 0;
@@ -89,10 +89,14 @@
             text-align: center; /* Center links */
             justify-content: center; /* Vertically center links */
             gap: 1.5rem; /* Space between links */
-
-            /* Hide on medium screens and up */
-            @media (min-width: 768px) {
-                position: static;
+        }
+        .nav__links.active {
+            right: 0; /* Slide into view */
+            display: flex; /* Show when active */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .nav__links {
+                position: static; /* Static position on desktop */
                 flex-direction: row;
                 height: auto;
                 width: auto;
@@ -101,19 +105,16 @@
                 box-shadow: none;
                 transition: none;
                 z-index: auto;
-                display: flex; /* Show as flex on medium and up */
-                gap: 1.5rem; /* Space between links */
+                display: flex; /* Always show as flex on medium and up */
+                gap: 1rem; /* Adjusted spacing for desktop navigation */
             }
-        }
-        .nav__links.active {
-            right: 0; /* Slide into view */
         }
         .nav__links li {
             margin: 0; /* Reset margin */
         }
         .nav__links a {
             display: block;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 1rem; /* Good tappable area */
             color: theme('colors.text-primary'); /* Default link color */
             font-size: 1.125rem; /* Larger font size for mobile menu */
             transition: color 0.3s ease-in-out;
@@ -128,7 +129,7 @@
 
         /* Hamburger Icon Animation */
         .hamburger {
-            display: flex;
+            display: flex; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
             width: 30px;
@@ -136,6 +137,9 @@
             cursor: pointer;
             z-index: 100; /* Ensure it's above the menu */
             transition: all 0.3s ease-in-out;
+            min-width: 44px; /* Ensure minimum tappable area */
+            min-height: 44px; /* Ensure minimum tappable area */
+            align-items: center; /* Center lines within the button */
         }
         .hamburger span {
             display: block;
@@ -299,7 +303,7 @@
                     <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
                 </button>
             </div>
-            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+            <ul id="main-navigation-links" class="nav__links md:space-x-4 text-lg" role="menu">
                 <li role="none"><a href="../index.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Home</a></li>
                 <li role="none"><a href="about.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">About</a></li>
                 <li role="none"><a href="projects.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Projects</a></li>
@@ -310,8 +314,8 @@
 
     <main id="main-content" class="max-w-6xl mx-auto px-4 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div class="contact-form fade-in bg-bg-secondary p-8 rounded-lg shadow-xl">
-            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
-            <p class="text-text-secondary mb-8 leading-relaxed">
+            <h1 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
+            <p class="text-text-secondary mb-8 leading-relaxed text-base">
                 Have a question or want to work together? Feel free to reach out!
             </p>
             <form id="contact-form" action="https://formspree.io/f/mjkrdkqv" method="POST" aria-live="polite">
@@ -330,27 +334,27 @@
                     <textarea id="message" name="message" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-text-primary placeholder-gray-500 min-h-[150px] resize-y focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent transition-all duration-300" placeholder="Your message" aria-required="true" aria-describedby="message-error"></textarea>
                     <div id="message-error" class="error-message" role="alert"></div>
                 </div>
-                <button type="submit" class="bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 transition-colors duration-300">Send Message</button>
+                <button type="submit" class="bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300">Send Message</button>
             </form>
         </div>
 
         <div class="contact-info fade-in bg-bg-secondary p-8 rounded-lg shadow-xl h-fit">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Contact Information</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-6">Contact Information</h2>
             <div class="mb-6">
                 <span class="block text-primary-accent text-sm font-mono mb-1">Email</span>
-                <div class="text-text-primary">
+                <div class="text-text-primary text-base">
                     <a href="mailto:devpundir97@gmail.com">devpundir97@gmail.com</a>
                 </div>
             </div>
             <div class="mb-6">
                 <span class="block text-primary-accent text-sm font-mono mb-1">Phone</span>
-                <div class="text-text-primary">
+                <div class="text-text-primary text-base">
                     <a href="tel:919760702614">+91 9760702614</a>
                 </div>
             </div>
             <div class="mb-6">
                 <span class="block text-primary-accent text-sm font-mono mb-1">Location</span>
-                <div class="text-text-secondary">Dehradun, India</div>
+                <div class="text-text-secondary text-base">Dehradun, India</div>
             </div>
             <div class="flex flex-wrap gap-4 mt-8">
                 <a href="https://www.linkedin.com/in/dev-pundir-b65238242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary-accent hover:text-white font-mono text-sm transition-colors duration-300 flex items-center">
