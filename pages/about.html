@@ -19,6 +19,7 @@
                         'text-secondary': '#a0aec0', /* Light gray for secondary text */
                         'text-primary': '#edf2f7',   /* Off-white for primary text */
                         'error-red': '#ff6b6b',     /* For error messages */
+                        'timeline-accent': '#00BFFF', /* Accent color for timeline and skill bars */
                     },
                     fontFamily: {
                         sans: ['Space Grotesk', 'sans-serif'], /* Main font */
@@ -31,9 +32,6 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
         /* Base body styles are now mostly handled by Tailwind classes directly on <body> */
-        /* Custom styles for elements that need specific overrides or JS-added styles */
-
-        /* Override default body background to ensure Tailwind classes take precedence */
         body {
             @apply bg-gray-900 text-text-primary min-h-screen font-sans;
         }
@@ -76,25 +74,93 @@
             top: 0;
         }
 
-        /* Mobile menu specific styles (matching contact.html) */
+        /* Mobile menu specific styles */
         .nav__links {
-            display: none; /* Hidden by default */
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .nav__links {
-                display: flex; /* Flex on medium screens and up */
+            display: flex; /* Always flex for layout, but hidden off-screen */
+            flex-direction: column;
+            position: fixed; /* Fixed to cover content */
+            top: 0;
+            right: -100%; /* Start off-screen to the right */
+            width: 75%; /* Cover 75% of screen width */
+            max-width: 300px; /* Max width for larger screens */
+            height: 100vh; /* Full viewport height */
+            background-color: theme('colors.bg-secondary'); /* Dark background for menu */
+            padding: 2rem 1rem; /* Padding inside the menu */
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5); /* Shadow for slide effect */
+            transition: right 0.3s ease-in-out; /* Smooth slide transition */
+            z-index: 99; /* Above main content, below loading spinner */
+            list-style: none; /* Remove default list bullets */
+            text-align: center; /* Center links */
+            justify-content: center; /* Vertically center links */
+            gap: 1.5rem; /* Space between links */
+
+            /* Hide on medium screens and up */
+            @media (min-width: 768px) {
+                position: static;
+                flex-direction: row;
+                height: auto;
+                width: auto;
+                background-color: transparent;
+                padding: 0;
+                box-shadow: none;
+                transition: none;
+                z-index: auto;
+                display: flex; /* Show as flex on medium and up */
+                gap: 1.5rem; /* Space between links */
             }
         }
         .nav__links.active {
-            display: flex;
-            flex-direction: column; /* Show as column when active */
+            right: 0; /* Slide into view */
         }
+        .nav__links li {
+            margin: 0; /* Reset margin */
+        }
+        .nav__links a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: theme('colors.text-primary'); /* Default link color */
+            font-size: 1.125rem; /* Larger font size for mobile menu */
+            transition: color 0.3s ease-in-out;
+        }
+        .nav__links a:hover {
+            color: theme('colors.primary-accent');
+        }
+        /* This ensures the active link color is visible against the menu background */
+        .nav__links a.text-primary-accent { 
+            color: theme('colors.primary-accent');
+        }
+
+        /* Hamburger Icon Animation */
         .hamburger {
-            display: block; /* Shown by default */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 100; /* Ensure it's above the menu */
+            transition: all 0.3s ease-in-out;
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: theme('colors.text-primary'); /* White lines */
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+        @media (min-width: 768px) { /* Hide hamburger on medium screens and up */
             .hamburger {
-                display: none; /* Hidden on medium screens and up */
+                display: none;
             }
         }
 
@@ -107,6 +173,40 @@
             left: 0;
             z-index: -1; /* Ensure it's behind other content */
             background-color: #1a202c; /* Fallback background color, should match body or a dark theme */
+        }
+
+        /* Loading Spinner Styles (Adjusted for Tailwind colors) */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: theme('colors.bg-secondary'); /* Use Tailwind color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading.fade-out {
+            opacity: 0;
+            pointer-events: none; /* Disable interaction after fade out */
+        }
+
+        .loading__spinner {
+            border: 8px solid rgba(0, 255, 157, 0.2); /* primary-accent with opacity */
+            border-top: 8px solid theme('colors.primary-accent'); /* primary-accent */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Skill Progress Bar Styling */
@@ -189,7 +289,7 @@
         }
 
         .timeline-content {
-            background-color: var(--bg-secondary);
+            background-color: theme('colors.bg-secondary'); /* Use Tailwind color */
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -201,8 +301,8 @@
         }
 
         .timeline-date {
-            color: var(--primary-color);
-            font-family: var(--font-mono);
+            color: theme('colors.primary-accent'); /* Use Tailwind color */
+            font-family: theme('fontFamily.mono'); /* Use Tailwind font */
             font-size: 0.875rem;
             margin-bottom: 0.5rem;
         }
@@ -210,12 +310,12 @@
         .timeline-school {
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: theme('colors.text-primary'); /* Use Tailwind color */
             margin-bottom: 0.25rem;
         }
 
         .timeline-degree {
-            color: var(--text-secondary);
+            color: theme('colors.text-secondary'); /* Use Tailwind color */
         }
     </style>
 </head>
@@ -226,7 +326,7 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8" role="navigation" aria-label="Main Navigation">
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 relative z-50" role="navigation" aria-label="Main Navigation">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <a href="../index.html" class="text-text-secondary hover:text-primary-accent transition-colors duration-300 text-sm md:text-base">← Back to Home</a>
@@ -234,9 +334,9 @@
             </div>
             <div class="md:hidden">
                 <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
                 </button>
             </div>
             <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">

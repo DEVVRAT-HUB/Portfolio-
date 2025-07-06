@@ -1,6 +1,8 @@
+// Universal script.js for all pages
+
 // Particles.js Background Animation Initialization
 function initParticlesBackground() {
-    // Check if the particles-js container exists on this page
+    // Check if the particles-js container exists on the current page
     if (document.getElementById('particles-js')) {
         particlesJS('particles-js', {
             "particles": {
@@ -115,10 +117,10 @@ function initParticlesBackground() {
     }
 }
 
-// Typing Animation for Tagline
+// Typing Animation for Tagline (only for index.html)
 function typeTagline(elementId, tagline, delay = 70, wordDelay = 300) {
     const element = document.getElementById(elementId);
-    if (!element) return;
+    if (!element) return; // Exit if element not found (e.g., on other pages)
 
     let currentText = '';
     let wordIndex = 0;
@@ -180,29 +182,57 @@ function initEasterEgg() {
     });
 }
 
-// Mobile Menu (updated for A11y)
+// Mobile Menu (Universal for all pages)
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav__links'); // This is the UL element
 
     if (hamburger && navLinks) {
+        // Function to close menu
+        const closeMenu = () => {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            // Re-enable body scroll if it was disabled
+            document.body.style.overflow = '';
+        };
+
         hamburger.addEventListener('click', () => {
             const isExpanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
             hamburger.setAttribute('aria-expanded', !isExpanded);
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('active'); // For visual hamburger animation
+
+            // Disable/enable body scroll when menu is open/closed
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            } else {
+                document.body.style.overflow = '';
+            }
         });
 
-        // Close menu when clicking outside
+        // Close menu when clicking on a navigation link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu when clicking outside (only on mobile/small screens)
         document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false'); // Reset aria-expanded
+            // Check if click is outside hamburger and navLinks AND if navLinks is currently active
+            if (window.innerWidth < 768 && !hamburger.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+
+        // Close menu on resize if it's open and screen becomes desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && navLinks.classList.contains('active')) {
+                closeMenu();
             }
         });
     }
 }
+
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -211,9 +241,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initEasterEgg();
     initMobileMenu();
 
-    // Tagline for typing animation
-    const taglineText = "Engineering seamless systems with DevOps, development, and deep network understanding.";
-    typeTagline('animated-tagline', taglineText, 70, 300); // Adjust delay and wordDelay as needed
+    // Only run tagline animation if on the index page and element exists
+    const animatedTaglineElement = document.getElementById('animated-tagline');
+    if (animatedTaglineElement) {
+        const taglineText = "Engineering seamless systems with DevOps, development, and deep network understanding.";
+        typeTagline('animated-tagline', taglineText, 70, 300); // Adjust delay and wordDelay as needed
+    }
+
+    // Enhanced Button Interaction (only for index.html)
+    const learnMoreButton = document.querySelector('.hero__content .btn');
+    if (learnMoreButton) {
+        learnMoreButton.style.transition = 'transform 0.2s ease-out'; // Add transition for smooth effect
+
+        learnMoreButton.addEventListener('mouseover', () => {
+            learnMoreButton.style.transform = 'scale(1.05)'; // Scale up slightly on hover
+        });
+
+        learnMoreButton.addEventListener('mouseout', () => {
+            learnMoreButton.style.transform = 'scale(1)'; // Scale back down on mouse out
+        });
+    }
 });
 
 // Smooth scroll for navigation links (ensure these links actually exist on the page)

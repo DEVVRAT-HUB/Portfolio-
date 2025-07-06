@@ -70,7 +70,7 @@
             top: 0;
         }
 
-        /* Mobile menu specific styles (matching other pages) */
+        /* Mobile menu specific styles */
         .nav__links {
             display: flex; /* Always flex for layout, but hidden off-screen */
             flex-direction: column;
@@ -121,7 +121,8 @@
         .nav__links a:hover {
             color: theme('colors.primary-accent');
         }
-        .nav__links .text-primary-accent { /* Ensure active link color is visible */
+        /* This ensures the active link color is visible against the menu background */
+        .nav__links a.text-primary-accent { 
             color: theme('colors.primary-accent');
         }
 
