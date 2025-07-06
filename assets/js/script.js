@@ -150,6 +150,175 @@ function typeTagline(elementId, tagline, delay = 70, wordDelay = 300) {
     typeWord(); // Start the animation
 }
 
+// Helper function to show error messages (updated for A11y)
+function showError(inputElement, message) {
+    const errorDivId = inputElement.id + '-error';
+    const errorDiv = document.getElementById(errorDivId);
+
+    if (errorDiv) {
+        errorDiv.textContent = message;
+        inputElement.setAttribute('aria-invalid', 'true'); // Indicate invalid state for screen readers
+        inputElement.classList.add('input-error'); // Add class for visual styling
+    } else {
+        // Fallback if errorDiv is not found (shouldn't happen with updated HTML)
+        const newErrorDiv = document.createElement('div');
+        newErrorDiv.className = 'error-message';
+        newErrorDiv.style.color = '#ff6b6b';
+        newErrorDiv.style.fontSize = '0.875rem';
+        newErrorDiv.style.marginTop = '0.5rem';
+        newErrorDiv.textContent = message;
+        inputElement.parentNode.appendChild(newErrorDiv);
+        inputElement.classList.add('input-error');
+        inputElement.setAttribute('aria-invalid', 'true');
+    }
+}
+
+// Helper function to remove error messages (updated for A11y)
+function clearError(inputElement) {
+    const errorDivId = inputElement.id + '-error';
+    const errorDiv = document.getElementById(errorDivId);
+
+    if (errorDiv) {
+        errorDiv.textContent = ''; // Clear the text content
+        inputElement.setAttribute('aria-invalid', 'false'); // Reset invalid state
+        inputElement.classList.remove('input-error'); // Remove error styling
+    }
+}
+
+// Helper function to validate a single field
+function validateField(inputElement) {
+    let fieldIsValid = true;
+    const value = inputElement.value.trim();
+    const fieldId = inputElement.id;
+
+    clearError(inputElement); // Always clear previous error before re-validating
+
+    if (fieldId === 'name') {
+        if (!value) {
+            showError(inputElement, 'Name is required.');
+            fieldIsValid = false;
+        }
+    } else if (fieldId === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value) {
+            showError(inputElement, 'Email is required.');
+            fieldIsValid = false;
+        } else if (!emailRegex.test(value)) {
+            showError(inputElement, 'Please enter a valid email address.');
+            fieldIsValid = false;
+        }
+    } else if (fieldId === 'message') {
+        const minLength = 10; // Define minimum message length
+        if (!value) {
+            showError(inputElement, 'Message is required.');
+            fieldIsValid = false;
+        } else if (value.length < minLength) {
+            showError(inputElement, `Message must be at least ${minLength} characters.`);
+            fieldIsValid = false;
+        }
+    }
+    return fieldIsValid;
+}
+
+
+// Form Validation and Submission
+async function validateForm(event) {
+    event.preventDefault(); // Always prevent default form submission
+
+    const form = event.target;
+    const nameInput = form.querySelector('#name');
+    const emailInput = form.querySelector('#email');
+    const messageInput = form.querySelector('#message');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Clear any existing success/error messages from previous submissions
+    document.querySelectorAll('.success-message').forEach(el => el.remove());
+    // Clear all field-specific errors before full validation
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = ''); // Clear text content
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    document.querySelectorAll('[aria-invalid="true"]').forEach(el => el.setAttribute('aria-invalid', 'false'));
+
+
+    // Perform full validation on all fields
+    const isNameValid = validateField(nameInput);
+    const isEmailValid = validateField(emailInput);
+    const isMessageValid = validateField(messageInput);
+
+    const isValidForm = isNameValid && isEmailValid && isMessageValid;
+
+    if (isValidForm) {
+        // Disable button and show loading state
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.7'; // Visual cue for disabled state
+
+        try {
+            const formData = new FormData(form);
+
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json' // Formspree recommends this header
+                }
+            });
+
+            if (response.ok) {
+                showSuccessMessage('Message sent successfully!');
+                form.reset(); // Clear the form fields on success
+            } else {
+                // Handle non-OK responses from Formspree (e.g., validation errors on their end)
+                const data = await response.json();
+                if (data.errors) {
+                    let errorMessage = 'Failed to send message: ';
+                    data.errors.forEach(err => errorMessage += `${err.field} ${err.message}. `);
+                    // For general form errors, display near the submit button or at the top of the form
+                    const generalErrorDiv = document.createElement('div');
+                    generalErrorDiv.className = 'error-message';
+                    generalErrorDiv.style.color = '#ff6b6b';
+                    generalErrorDiv.style.marginTop = '1rem';
+                    generalErrorDiv.textContent = errorMessage;
+                    form.insertBefore(generalErrorDiv, submitButton.parentNode); // Insert before button's parent
+                } else {
+                    const generalErrorDiv = document.createElement('div');
+                    generalErrorDiv.className = 'error-message';
+                    generalErrorDiv.style.color = '#ff6b6b';
+                    generalErrorDiv.style.marginTop = '1rem';
+                    generalErrorDiv.textContent = 'Failed to send message. Please try again.';
+                    form.insertBefore(generalErrorDiv, submitButton.parentNode);
+                }
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            const generalErrorDiv = document.createElement('div');
+            generalErrorDiv.className = 'error-message';
+            generalErrorDiv.style.color = '#ff6b6b';
+            generalErrorDiv.style.marginTop = '1rem';
+            generalErrorDiv.textContent = 'Network error. Please try again later.';
+            form.insertBefore(generalErrorDiv, submitButton.parentNode);
+        } finally {
+            // Re-enable button and reset text
+            submitButton.textContent = 'Send Message';
+            submitButton.disabled = false;
+            submitButton.style.opacity = '1';
+        }
+    }
+}
+
+function showSuccessMessage(message) {
+    // Remove any existing success messages before adding a new one
+    document.querySelectorAll('.success-message').forEach(el => el.remove());
+
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message fade-in';
+    successDiv.style.color = '#00ff9d';
+    successDiv.style.padding = '1rem';
+    successDiv.style.marginTop = '1rem';
+    successDiv.style.textAlign = 'center';
+    successDiv.textContent = message;
+    document.querySelector('.contact-form').appendChild(successDiv);
+}
+
 // Easter Egg
 function initEasterEgg() {
     const easterEgg = document.querySelector('.easter-egg');
@@ -170,7 +339,7 @@ function initEasterEgg() {
         tipElement.style.position = 'fixed';
         tipElement.style.bottom = '60px';
         tipElement.style.right = '20px';
-        tipElement.style.backgroundColor = '#1a202c'; /* bg-secondary */
+        tipElement.style.backgroundColor = 'var(--bg-secondary)'; /* Using var() here - consider replacing with Tailwind custom color if possible */
         tipElement.style.padding = '1rem';
         tipElement.style.borderRadius = '4px';
         tipElement.style.maxWidth = '300px';
@@ -182,7 +351,7 @@ function initEasterEgg() {
     });
 }
 
-// Mobile Menu (Universal for all pages)
+// Mobile Menu (updated for A11y)
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav__links'); // This is the UL element
@@ -260,6 +429,25 @@ document.addEventListener('DOMContentLoaded', () => {
         learnMoreButton.addEventListener('mouseout', () => {
             learnMoreButton.style.transform = 'scale(1)'; // Scale back down on mouse out
         });
+    }
+
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        // Attach real-time validation listeners
+        const nameInput = contactForm.querySelector('#name');
+        const emailInput = contactForm.querySelector('#email');
+        const messageInput = contactForm.querySelector('#message');
+
+        nameInput.addEventListener('blur', () => validateField(nameInput));
+        emailInput.addEventListener('blur', () => validateField(emailInput));
+        messageInput.addEventListener('blur', () => validateField(messageInput));
+
+        // Clear error as user types
+        nameInput.addEventListener('input', () => clearError(nameInput));
+        emailInput.addEventListener('input', () => clearError(emailInput));
+        messageInput.addEventListener('input', () => clearError(messageInput));
+
+        contactForm.addEventListener('submit', validateForm);
     }
 });
 

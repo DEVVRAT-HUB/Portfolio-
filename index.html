@@ -7,9 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN with custom configuration -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Ensure tailwind.config runs after Tailwind CSS library is loaded
         tailwind.config = {
             theme: {
                 extend: {
@@ -102,7 +103,8 @@
                 transition: none;
                 z-index: auto;
                 display: flex; /* Show as flex on medium and up */
-                gap: 1.5rem; /* Space between links */
+                /* Adjusted spacing for desktop navigation to prevent overflow */
+                gap: 1rem; /* Reduced from 1.5rem (space-x-6 to space-x-4) */
             }
         }
         .nav__links.active {
@@ -232,7 +234,7 @@
                     <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
                 </button>
             </div>
-            <ul id="main-navigation-links" class="nav__links space-x-6 text-lg" role="menu">
+            <ul id="main-navigation-links" class="nav__links md:space-x-4 text-lg" role="menu">
                 <li role="none"><a href="index.html" class="text-primary-accent font-semibold border-b-2 border-primary-accent pb-1" role="menuitem" aria-current="page">Home</a></li>
                 <li role="none"><a href="pages/about.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">About</a></li>
                 <li role="none"><a href="pages/projects.html" class="text-gray-300 hover:text-primary-accent transition-colors duration-300" role="menuitem">Projects</a></li>
@@ -243,14 +245,9 @@
 
     <main id="main-content" class="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12 md:py-20">
         <section class="hero__content text-center max-w-4xl mx-auto fade-in">
-            <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-6 flex items-center justify-center">
-                <!-- Circular Text Container - will be filled by JS -->
-                <div id="circular-text" class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                    <!-- Text characters will be dynamically inserted here -->
-                </div>
-
-                <!-- Profile Photo (Inner Circle) -->
-                <div class="profile-photo relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary-accent mx-auto shadow-lg
+            <div class="relative w-64 h-64 md:w-80 md:h-80 mb-6 flex items-center justify-center md:justify-start">
+                <!-- Profile Photo (Inner Square) -->
+                <div class="profile-photo relative w-48 h-48 md:w-64 md:h-64 overflow-hidden border-4 border-primary-accent shadow-lg
                             transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-accent/30 z-10">
                     <img src="assets/images/profile.jpg" onerror="this.onerror=null;this.src='https://placehold.co/256x256/1a202c/a0aec0?text=Profile';" alt="Devvrat Pundir" class="w-full h-full object-cover">
                 </div>
