@@ -133,20 +133,19 @@
             display: flex !important; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
-            width: 30px;
-            height: 25px;
+            width: 44px; /* Explicitly set to 44px */
+            height: 44px; /* Explicitly set to 44px */
             cursor: pointer;
             z-index: 100; /* Ensure it's above the menu */
             transition: all 0.3s ease-in-out;
-            min-width: 44px; /* Ensure minimum tappable area */
-            min-height: 44px; /* Ensure minimum tappable area */
             align-items: center; /* Center lines within the button */
+            padding: 0; /* Remove default button padding */
         }
         .hamburger span {
             display: block;
-            width: 100%;
+            width: 30px; /* Keep the line width */
             height: 3px;
-            background-color: theme('colors.text-primary'); /* White lines */
+            background-color: theme('colors.primary-accent'); /* Changed to primary-accent for visibility */
             border-radius: 3px;
             transition: all 0.3s ease-in-out;
         }
@@ -232,9 +231,9 @@
             </div>
             <div class="md:hidden">
                 <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
-                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
-                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
-                    <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent hamburger-line"></span>
                 </button>
             </div>
             <ul id="main-navigation-links" class="nav__links md:space-x-4 text-lg" role="menu">

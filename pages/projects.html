@@ -131,20 +131,19 @@
             display: flex !important; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
-            width: 30px;
-            height: 25px;
+            width: 44px; /* Explicitly set to 44px */
+            height: 44px; /* Explicitly set to 44px */
             cursor: pointer;
             z-index: 100; /* Ensure it's above the menu */
             transition: all 0.3s ease-in-out;
-            min-width: 44px; /* Ensure minimum tappable area */
-            min-height: 44px; /* Ensure minimum tappable area */
             align-items: center; /* Center lines within the button */
+            padding: 0; /* Remove default button padding */
         }
         .hamburger span {
             display: block;
-            width: 100%;
+            width: 30px; /* Keep the line width */
             height: 3px;
-            background-color: theme('colors.text-primary'); /* White lines */
+            background-color: theme('colors.primary-accent'); /* Changed to primary-accent for visibility */
             border-radius: 3px;
             transition: all 0.3s ease-in-out;
         }
@@ -208,9 +207,9 @@
             </div>
             <div class="md:hidden">
                 <button class="hamburger text-white focus:outline-none" aria-expanded="false" aria-controls="main-navigation-links" aria-label="Toggle navigation menu">
-                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
-                    <span class="block w-6 h-0.5 bg-white mb-1 hamburger-line"></span>
-                    <span class="block w-6 h-0.5 bg-white hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent mb-1 hamburger-line"></span>
+                    <span class="block w-6 h-0.5 bg-primary-accent hamburger-line"></span>
                 </button>
             </div>
             <ul id="main-navigation-links" class="nav__links md:space-x-4 text-lg" role="menu">
@@ -225,43 +224,96 @@
     <main id="main-content" class="max-w-6xl mx-auto px-4 py-16 md:py-24 mt-20">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 fade-in">My Projects</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Project 1: Secure File Sharing System -->
+            <!-- Project 1: Dialer -->
             <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=Secure+File+Sharing" alt="Secure File Sharing System" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="../assets/images/project-dialer.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Dialer+App';" alt="Dialer App" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-6">
-                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Secure File Sharing System</h3>
+                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Dialer</h3>
                     <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
-                        A robust application for secure file exchange using advanced encryption and access controls.
+                        A versatile dialer application, developed through multiple iterations to showcase evolving UI/UX and functionality improvements, including saving and updating numbers.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Java</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Android</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">UI/UX</span>
+                    </div>
+                    <a href="https://github.com/DEVVRRAT-HUB/CALLER-ID-LOOKUP" target="_blank" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
+                </div>
+            </div>
+
+            <!-- Project 2: Weather API App -->
+            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
+                <img src="../assets/images/project-weather-app.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Weather+App';" alt="Weather API App" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Weather API App</h3>
+                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
+                        A dynamic weather application that fetches and displays real-time temperature and weather conditions for various cities using a weather API.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">JavaScript</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">HTML</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">CSS</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">API Integration</span>
+                    </div>
+                    <a href="https://devvrat-hub.github.io/weather-2/" target="_blank" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">Live Demo</a>
+                </div>
+            </div>
+
+            <!-- Project 3: Task Manager with Modern UI -->
+            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
+                <img src="../assets/images/project-task-manager.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Task+Manager';" alt="Task Manager with Modern UI" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Task Manager with Modern UI</h3>
+                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
+                        A feature-rich task manager application built with a sleek, modern user interface for efficient task organization and productivity.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">HTML</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">CSS</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">JavaScript</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Modern UI</span>
+                    </div>
+                    <a href="https://devvrat-hub.github.io/Task-manager-frontend/" target="_blank" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">Live Demo</a>
+                </div>
+            </div>
+
+            <!-- Project 4: Zayyaah Co. Landing Page -->
+            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
+                <img src="../assets/images/project-zayyaah-landing.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Zayyaah+Co.+Landing+Page';" alt="Zayyaah Co. Landing Page" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Zayyaah Co. Landing Page</h3>
+                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
+                        A captivating and responsive landing page designed for Zayyaah Co., a jewellery website, focusing on elegant aesthetics and user engagement.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">HTML</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">CSS</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Responsive Design</span>
+                    </div>
+                    <a href="https://devvrat-hub.github.io/Landing-page.v1/" target="_blank" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">Live Demo</a>
+                </div>
+            </div>
+
+            <!-- Project 5: Text Encrypter -->
+            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
+                <img src="../assets/images/project-text-encrypter.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Text+Encrypter';" alt="Text Encrypter" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-6">
+                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Text Encrypter</h3>
+                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
+                        Various versions of text encrypter, from basic to advanced encryption techniques, demonstrating my growing skills in cryptography and security. This is a Python project designed to be run locally.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Python</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Encryption</span>
+                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Cryptography</span>
                         <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Security</span>
                     </div>
-                    <a href="#" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
+                    <a href="https://github.com/DEVVRRAT-HUB/text.encrypter" target="_blank" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
                 </div>
             </div>
 
-            <!-- Project 2: AI-Powered Chatbot -->
+            <!-- Project 6: Portfolio Website (This one!) - Added your current portfolio as a project -->
             <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=AI+Chatbot" alt="AI-Powered Chatbot" class="w-full h-48 object-cover rounded-t-lg">
-                <div class="p-6">
-                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">AI-Powered Chatbot</h3>
-                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
-                        Developed a conversational AI chatbot capable of natural language understanding and response generation.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Python</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Machine Learning</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">NLP</span>
-                    </div>
-                    <a href="#" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
-                </div>
-            </div>
-
-            <!-- Project 3: Portfolio Website (This one!) -->
-            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=Portfolio+Website" alt="Portfolio Website" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=Portfolio+Website" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a202c/a0aec0?text=Portfolio+Website';" alt="Portfolio Website" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-6">
                     <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Portfolio Website</h3>
                     <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
@@ -274,57 +326,6 @@
                         <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">TailwindCSS</span>
                     </div>
                     <a href="../index.html" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
-                </div>
-            </div>
-
-            <!-- Project 4: Data Visualization Dashboard -->
-            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=Data+Dashboard" alt="Data Visualization Dashboard" class="w-full h-48 object-cover rounded-t-lg">
-                <div class="p-6">
-                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Data Visualization Dashboard</h3>
-                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
-                        Interactive dashboard for visualizing complex datasets using modern web technologies.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">JavaScript</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">D3.js</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Data Analysis</span>
-                    </div>
-                    <a href="#" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
-                </div>
-            </div>
-
-            <!-- Project 5: E-commerce Backend API -->
-            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=E-commerce+API" alt="E-commerce Backend API" class="w-full h-48 object-cover rounded-t-lg">
-                <div class="p-6">
-                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">E-commerce Backend API</h3>
-                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
-                        Built a RESTful API for an e-commerce platform, handling product, order, and user management.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Node.js</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Express.js</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">MongoDB</span>
-                    </div>
-                    <a href="#" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
-                </div>
-            </div>
-
-            <!-- Project 6: Mobile Game Development -->
-            <div class="project-card bg-bg-secondary rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2 fade-in">
-                <img src="https://placehold.co/600x400/1a202c/a0aec0?text=Mobile+Game" alt="Mobile Game Development" class="w-full h-48 object-cover rounded-t-lg">
-                <div class="p-6">
-                    <h3 class="project-title text-xl md:text-2xl font-bold mb-2">Mobile Game Development</h3>
-                    <p class="project-description text-text-secondary text-base leading-relaxed mb-4">
-                        Developed a casual mobile game with intuitive controls and engaging gameplay mechanics.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Unity</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">C#</span>
-                        <span class="project-tag px-3 py-1 rounded-full text-xs font-mono">Game Design</span>
-                    </div>
-                    <a href="#" class="btn-project bg-primary-accent text-white py-2 px-4 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">View Project</a>
                 </div>
             </div>
         </div>
