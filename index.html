@@ -71,9 +71,9 @@
             top: 0;
         }
 
-        /* Mobile menu specific styles */
+        /* Mobile menu specific styles - IMPORTANT: using !important for display properties to ensure override */
         .nav__links {
-            display: none; /* Hidden by default on small screens */
+            display: none !important; /* Hidden by default on small screens */
             flex-direction: column;
             position: fixed; /* Fixed to cover content */
             top: 0;
@@ -92,22 +92,22 @@
             gap: 1.5rem; /* Space between links */
         }
         .nav__links.active {
-            right: 0; /* Slide into view */
-            display: flex; /* Show when active */
+            right: 0 !important; /* Slide into view */
+            display: flex !important; /* Show when active */
         }
         @media (min-width: 768px) { /* md breakpoint */
             .nav__links {
-                position: static; /* Static position on desktop */
-                flex-direction: row;
-                height: auto;
-                width: auto;
-                background-color: transparent;
-                padding: 0;
-                box-shadow: none;
-                transition: none;
-                z-index: auto;
-                display: flex; /* Always show as flex on medium and up */
-                gap: 1rem; /* Adjusted spacing for desktop navigation */
+                position: static !important; /* Static position on desktop */
+                flex-direction: row !important;
+                height: auto !important;
+                width: auto !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                transition: none !important;
+                z-index: auto !important;
+                display: flex !important; /* Always show as flex on medium and up */
+                gap: 1rem !important; /* Adjusted spacing for desktop navigation */
             }
         }
         .nav__links li {
@@ -128,9 +128,9 @@
             color: theme('colors.primary-accent');
         }
 
-        /* Hamburger Icon Animation */
+        /* Hamburger Icon Animation - IMPORTANT: using !important for display properties to ensure override */
         .hamburger {
-            display: flex; /* Show by default on small screens */
+            display: flex !important; /* Show by default on small screens */
             flex-direction: column;
             justify-content: space-around;
             width: 30px;
@@ -161,7 +161,7 @@
         }
         @media (min-width: 768px) { /* Hide hamburger on medium screens and up */
             .hamburger {
-                display: none;
+                display: none !important;
             }
         }
 
@@ -225,7 +225,7 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 relative z-50" role="navigation" aria-label="Main Navigation">
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 fixed w-full top-0 z-50" role="navigation" aria-label="Main Navigation">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <a href="index.html" class="text-xl md:text-2xl font-bold text-white hover:text-primary-accent transition-colors duration-300">DP Portfolio</a>
@@ -246,7 +246,7 @@
         </div>
     </nav>
 
-    <main id="main-content" class="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12 md:py-20">
+    <main id="main-content" class="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-16 md:py-24 mt-20">
         <section class="hero__content text-center max-w-4xl mx-auto fade-in
                         sm:flex sm:flex-row sm:items-center sm:text-left sm:gap-8">
             <div class="flex items-center justify-center sm:justify-start mb-6 sm:mb-0 flex-shrink-0
@@ -259,8 +259,8 @@
             </div>
             <div class="profile-info sm:flex-grow">
                 <h1 class="hero__title text-2xl sm:text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Devvrat Pundir</h1>
-                <p class="hero__subtitle text-lg sm:text-xl md:text-2xl text-text-secondary mb-3">B.Tech Student at UPES Dehradun</p>
-                <p class="hero__subtitle text-lg md:text-xl text-text-secondary mb-8" id="animated-tagline">
+                <p class="hero__subtitle text-lg sm:text-xl md:text-2xl text-text-secondary mb-3 leading-relaxed">B.Tech Student at UPES Dehradun</p>
+                <p class="hero__subtitle text-lg md:text-xl text-text-secondary mb-8 leading-relaxed" id="animated-tagline">
                     <!-- Tagline will be animated here by JavaScript -->
                 </p>
                 <a href="pages/about.html" class="btn bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 inline-block shadow-md hover:shadow-xl">Learn More</a>

@@ -290,7 +290,7 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 relative z-50" role="navigation" aria-label="Main Navigation">
+    <nav class="bg-gray-800 shadow-lg py-4 px-4 md:px-8 fixed w-full top-0 z-50" role="navigation" aria-label="Main Navigation">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <a href="../index.html" class="text-text-secondary hover:text-primary-accent transition-colors duration-300 text-sm md:text-base">← Back to Home</a>
@@ -312,7 +312,7 @@
         </div>
     </nav>
 
-    <main id="main-content" class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+    <main id="main-content" class="max-w-6xl mx-auto px-4 py-16 md:py-24 mt-20">
         <div class="contact-form fade-in bg-bg-secondary p-8 rounded-lg shadow-xl">
             <h1 class="text-3xl sm:text-4xl md:text-4xl font-bold text-white mb-6">Get in Touch</h1>
             <p class="text-text-secondary mb-8 leading-relaxed text-base">
@@ -334,7 +334,7 @@
                     <textarea id="message" name="message" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-text-primary placeholder-gray-500 min-h-[150px] resize-y focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent transition-all duration-300" placeholder="Your message" aria-required="true" aria-describedby="message-error"></textarea>
                     <div id="message-error" class="error-message" role="alert"></div>
                 </div>
-                <button type="submit" class="bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300">Send Message</button>
+                <button type="submit" class="bg-primary-accent text-white py-3 px-6 rounded-md font-bold hover:bg-green-600 focus:ring-2 focus:ring-primary-accent focus:ring-opacity-50 transition-colors duration-300 shadow-md hover:shadow-xl">Send Message</button>
             </form>
         </div>
 
