@@ -19,7 +19,7 @@
                         'text-secondary': '#a0aec0', /* Light gray for secondary text */
                         'text-primary': '#edf2f7',   /* Off-white for primary text */
                         'error-red': '#ff6b6b',     /* For error messages */
-                        'timeline-accent': '#00BFFF', /* Accent color for timeline and skill bars */
+                        'neon-green': '#39ff14', /* New neon green for progress bars and timeline dots */
                     },
                     fontFamily: {
                         sans: ['Space Grotesk', 'sans-serif'], /* Main font */
@@ -190,7 +190,7 @@
             width: 100%; /* Ensure it takes full width of its container */
         }
         .skill-progress-bar-fill {
-            background-color: theme('colors.primary-accent'); /* Changed to primary-accent for neon effect */
+            background-color: theme('colors.neon-green') !important; /* Changed to neon-green with !important */
             height: 100%;
             border-radius: 9999px;
             transition: width 0.5s ease-out; /* Smooth animation for width change */
@@ -243,7 +243,7 @@
             width: 16px;
             height: 16px;
             right: -10px; /* Position dot on the line */
-            background-color: theme('colors.timeline-accent'); /* DEEP SKY BLUE */
+            background-color: theme('colors.neon-green') !important; /* Changed to neon-green with !important */
             border: 2px solid #1a202c; /* Border around dot */
             top: 25px;
             border-radius: 50%;
@@ -272,9 +272,9 @@
             transform: translateY(-5px); /* Subtle lift on hover */
         }
 
-        /* Updated timeline-date to use the new timeline accent color */
+        /* Updated timeline-date to use the new neon green color */
         .timeline-date {
-            color: theme('colors.timeline-accent'); /* DEEP SKY BLUE */
+            color: theme('colors.neon-green') !important; /* Changed to neon-green with !important */
             font-family: var(--font-mono);
             font-size: 0.875rem;
             margin-bottom: 0.5rem;
